@@ -8,5 +8,8 @@
   },
   "keywords": [],
   "author": "victor.fiamoncini@gmail.com",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "git-commit-msg-linter": "^4.1.3"
+  }
 }
