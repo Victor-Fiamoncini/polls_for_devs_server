@@ -1,0 +1,12 @@
+{
+  "name": "polls_for_devs_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "victor.fiamoncini@gmail.com",
+  "license": "ISC"
+}
