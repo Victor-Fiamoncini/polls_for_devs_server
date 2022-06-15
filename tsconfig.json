@@ -5,5 +5,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "allowJs": true
-  }
+  },
+  "include": ["./src"],
+  "exclude": ["./dist"]
 }
