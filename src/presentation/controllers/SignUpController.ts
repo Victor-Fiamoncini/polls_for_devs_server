@@ -1,18 +1,12 @@
-import { HttpRequest, HttpResponse } from 'src/presentation'
+import { badRequest, HttpRequest, HttpResponse, MissingParamError } from 'src/presentation'
 
 export class SignUpController {
-  handle (httpRequest: HttpRequest): HttpResponse {
-    if (!httpRequest.body.name) {
-      return {
-        statusCode: 400,
-        body: new Error('Missing param: name')
-      }
-    }
+  private readonly requiredFields = ['name', 'email']
 
-    if (!httpRequest.body.email) {
-      return {
-        statusCode: 400,
-        body: new Error('Missing param: email')
+  handle (httpRequest: HttpRequest): HttpResponse {
+    for (const field of this.requiredFields) {
+      if (!httpRequest.body[field]) {
+        return badRequest(new MissingParamError(field))
       }
     }
   }
