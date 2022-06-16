@@ -6,7 +6,8 @@ export default {
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
-  moduleFileExtensions: ['js', 'mjs', 'cjs', 'jsx', 'ts', 'tsx', 'json', 'node'],
+  coverageReporters: ['lcov', 'json'],
+  moduleFileExtensions: ['js', 'ts', 'json', 'node'],
   moduleNameMapper: {
     'src/(.*)': '<rootDir>/src/$1'
   },
