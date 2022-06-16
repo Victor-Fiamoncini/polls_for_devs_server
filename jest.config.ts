@@ -15,7 +15,7 @@ export default {
   testEnvironment: 'node',
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   testRegex: '(/<rootDir>/.*|(\\.|/)(test|spec))\\.(js|ts)?$',
-  tranform: {
+  transform: {
     '.+\\.ts$': 'ts-jest'
   }
 } as Config
