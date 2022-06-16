@@ -1,9 +1,9 @@
-import { badRequest, HttpRequest, HttpResponse, MissingParamError } from 'src/presentation'
+import { badRequest, Controller, HttpRequest, MissingParamError } from 'src/presentation'
 
-export class SignUpController {
-  private readonly requiredFields = ['name', 'email']
+export class SignUpController implements Controller {
+  private readonly requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
 
-  handle (httpRequest: HttpRequest): HttpResponse {
+  handle (httpRequest: HttpRequest) {
     for (const field of this.requiredFields) {
       if (!httpRequest.body[field]) {
         return badRequest(new MissingParamError(field))

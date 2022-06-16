@@ -1,3 +1,4 @@
+export * from 'src/presentation/contracts/Controller'
 export * from 'src/presentation/controllers/SignUpController'
 export * from 'src/presentation/errors/MissingParamError'
 export * from 'src/presentation/http/HttpRequest'
