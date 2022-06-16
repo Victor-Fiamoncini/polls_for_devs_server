@@ -4,8 +4,9 @@
   "description": "Polls for devs main API",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky install",
     "test": "jest",
-    "prepare": "husky install"
+    "test:staged": "jest"
   },
   "keywords": [],
   "author": "victor.fiamoncini@gmail.com",
@@ -26,6 +27,7 @@
     "lint-staged": "^13.0.1",
     "prettier": "^2.6.2",
     "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.1",
     "typescript": "^4.7.2"
   }
 }
