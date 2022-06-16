@@ -1,11 +1,15 @@
 import { EmailValidator, InvalidParamError, MissingParamError, ServerError, SignUpController } from 'src/presentation'
 
-class EmailValidatorStub implements EmailValidator {
-  isValid (email: string) { return true }
+const makeEmailValidatorStub = () => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid (email: string) { return true }
+  }
+
+  return new EmailValidatorStub()
 }
 
 const makeSut = () => {
-  const emailValidatorStub = new EmailValidatorStub()
+  const emailValidatorStub = makeEmailValidatorStub()
   const sut = new SignUpController(emailValidatorStub)
 
   return {
@@ -81,6 +85,24 @@ describe('SignUpController', () => {
 
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
+  })
+
+  it('should return 400 if password-confirmation fails', () => {
+    const { sut } = makeSut()
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'invalid_password'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirmation'))
   })
 
   it('should return 400 if an invalid email is provided', () => {
