@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponse } from 'src/presentation'
+import { HttpRequest, HttpResponse } from 'src/presentation/http'
 
 export interface Controller {
   handle(httpRequest: HttpRequest): HttpResponse
