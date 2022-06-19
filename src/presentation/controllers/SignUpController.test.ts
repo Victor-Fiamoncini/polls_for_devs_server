@@ -1,10 +1,12 @@
-import { EmailValidator, InvalidParamError, MissingParamError, ServerError, SignUpController } from 'src/presentation'
+import { EmailValidator } from 'src/presentation/contracts'
+import { SignUpController } from 'src/presentation/controllers'
+import { InvalidParamError, MissingParamError, ServerError } from 'src/presentation/errors'
+
+class EmailValidatorStub implements EmailValidator {
+  isValid (email: string) { return true }
+}
 
 const makeEmailValidatorStub = () => {
-  class EmailValidatorStub implements EmailValidator {
-    isValid (email: string) { return true }
-  }
-
   return new EmailValidatorStub()
 }
 
