@@ -10,7 +10,7 @@ export class SignUpController implements Controller {
   constructor (
     private readonly emailValidator: EmailValidator,
     private readonly addAccountUseCase: AddAccountUseCase
-  ) {}
+  ) { }
 
   handle (httpRequest: HttpRequest) {
     try {
