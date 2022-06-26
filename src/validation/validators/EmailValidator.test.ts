@@ -1,13 +1,27 @@
-import { RegexEmailValidator } from 'src/validation/validators'
+import { EmailValidatorAdapter } from 'src/validation/validators'
 
-const makeSut = () => new RegexEmailValidator()
+jest.mock('src/validation/validators/EmailValidatorAdapter')
 
-describe('EmailValidator', () => {
+EmailValidatorAdapter.prototype.isValid = jest.fn(() => true)
+
+const makeSut = () => new EmailValidatorAdapter()
+
+describe('EmailValidatorAdapter', () => {
   it('should return false if validator returns false', () => {
     const sut = makeSut()
+
+    jest.spyOn(sut, 'isValid').mockImplementationOnce(() => false)
 
     const isValid = sut.isValid('invalid_email@mail.com')
 
     expect(isValid).toBe(false)
+  })
+
+  it('should return true if validator returns true', () => {
+    const sut = makeSut()
+
+    const isValid = sut.isValid('valid_email@mail.com')
+
+    expect(isValid).toBe(true)
   })
 })

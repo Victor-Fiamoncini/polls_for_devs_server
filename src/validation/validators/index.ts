@@ -1,1 +1,1 @@
-export * from 'src/validation/validators/RegexEmailValidator'
+export * from 'src/validation/validators/EmailValidatorAdapter'
