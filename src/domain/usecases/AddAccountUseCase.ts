@@ -7,5 +7,5 @@ export interface AddAccountModel {
 }
 
 export interface AddAccountUseCase {
-  add(account: AddAccountModel): AccountEntity
+  add(account: AddAccountModel): Promise<AccountEntity>
 }
