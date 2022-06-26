@@ -1,12 +1,12 @@
-import { EmailValidatorAdapter } from 'src/validation/validators'
+import { RegexEmailValidator } from 'src/validation/validators'
 
-jest.mock('src/validation/validators/EmailValidatorAdapter')
+jest.mock('src/validation/validators/RegexEmailValidator')
 
-EmailValidatorAdapter.prototype.isValid = jest.fn(() => true)
+RegexEmailValidator.prototype.isValid = jest.fn(() => true)
 
-const makeSut = () => new EmailValidatorAdapter()
+const makeSut = () => new RegexEmailValidator()
 
-describe('EmailValidatorAdapter', () => {
+describe('EmailValidator', () => {
   it('should return false if validator returns false', () => {
     const sut = makeSut()
 
