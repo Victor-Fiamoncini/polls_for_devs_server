@@ -1,8 +1,9 @@
 import { AccountEntity, AddAccountModel, AddAccountUseCase } from 'src/domain'
 
-import { EmailValidator } from 'src/presentation/contracts'
 import { SignUpController } from 'src/presentation/controllers'
 import { InvalidParamError, MissingParamError, ServerError } from 'src/presentation/errors'
+
+import { EmailValidator } from 'src/validation'
 
 const makeAddAccountUseCaseStub = () => {
   class AddAccountUseCaseStub implements AddAccountUseCase {

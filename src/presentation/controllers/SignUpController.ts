@@ -1,8 +1,10 @@
 import { AddAccountUseCase } from 'src/domain'
 
-import { Controller, EmailValidator } from 'src/presentation/contracts'
+import { Controller } from 'src/presentation/contracts'
 import { InvalidParamError, MissingParamError } from 'src/presentation/errors'
 import { badRequest, created, HttpRequest, serverError } from 'src/presentation/http'
+
+import { EmailValidator } from 'src/validation'
 
 export class SignUpController implements Controller {
   private readonly requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
