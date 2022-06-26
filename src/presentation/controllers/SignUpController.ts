@@ -2,7 +2,7 @@ import { AddAccountUseCase } from 'src/domain'
 
 import { Controller, EmailValidator } from 'src/presentation/contracts'
 import { InvalidParamError, MissingParamError } from 'src/presentation/errors'
-import { badRequest, HttpRequest, serverError } from 'src/presentation/http'
+import { badRequest, HttpRequest, HttpResponse, serverError } from 'src/presentation/http'
 
 export class SignUpController implements Controller {
   private readonly requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
@@ -12,7 +12,7 @@ export class SignUpController implements Controller {
     private readonly addAccountUseCase: AddAccountUseCase
   ) { }
 
-  handle (httpRequest: HttpRequest) {
+  handle (httpRequest: HttpRequest): HttpResponse {
     try {
       for (const field of this.requiredFields) {
         if (!httpRequest.body[field]) {
@@ -32,7 +32,12 @@ export class SignUpController implements Controller {
         return badRequest(new InvalidParamError('email'))
       }
 
-      this.addAccountUseCase.add({ email, name, password })
+      const account = this.addAccountUseCase.add({ email, name, password })
+
+      return {
+        statusCode: 201,
+        body: account
+      }
     } catch {
       return serverError()
     }
