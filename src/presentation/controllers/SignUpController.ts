@@ -11,7 +11,7 @@ export class SignUpController implements Controller {
 
   constructor (
     private readonly emailValidator: EmailValidator,
-    private readonly addAccountUseCase: AddAccountUseCase
+    private readonly addAccountUseCase: AddAccountUseCase.UseCase
   ) { }
 
   async handle (httpRequest: HttpRequest) {

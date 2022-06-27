@@ -1,12 +1,17 @@
-import { Encrypter } from 'src/data/contracts'
+import { AddAccountRepository, Encrypter } from 'src/data/contracts'
 
-import { AccountEntity, AddAccountModel, AddAccountUseCase } from 'src/domain'
+import { AccountEntity, AddAccountUseCase } from 'src/domain'
 
-export class DbAddAccountUseCase implements AddAccountUseCase {
-  constructor (private readonly encrypter: Encrypter) { }
+export class DbAddAccountUseCase implements AddAccountUseCase.UseCase {
+  constructor (
+    private readonly encrypter: Encrypter,
+    private readonly addAccountRepository: AddAccountRepository.Repository
+  ) { }
 
-  async add (account: AddAccountModel): Promise<AccountEntity> {
-    await this.encrypter.encrypt(account.password)
+  async add (account: AddAccountUseCase.Params): Promise<AccountEntity> {
+    const hashedPassword = await this.encrypter.encrypt(account.password)
+
+    await this.addAccountRepository.add({ ...account, password: hashedPassword })
 
     return new Promise(resolve => resolve(null))
   }

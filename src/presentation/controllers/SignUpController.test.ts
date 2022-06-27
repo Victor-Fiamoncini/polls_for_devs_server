@@ -1,4 +1,4 @@
-import { AccountEntity, AddAccountModel, AddAccountUseCase } from 'src/domain'
+import { AccountEntity, AddAccountUseCase } from 'src/domain'
 
 import { SignUpController } from 'src/presentation/controllers'
 import { InvalidParamError, MissingParamError, ServerError } from 'src/presentation/errors'
@@ -6,8 +6,8 @@ import { InvalidParamError, MissingParamError, ServerError } from 'src/presentat
 import { EmailValidator } from 'src/validation'
 
 const makeAddAccountUseCaseStub = () => {
-  class AddAccountUseCaseStub implements AddAccountUseCase {
-    async add (account: AddAccountModel): Promise<AccountEntity> {
+  class AddAccountUseCaseStub implements AddAccountUseCase.UseCase {
+    async add (account: AddAccountUseCase.Params): Promise<AccountEntity> {
       const fakeAccount = {
         id: 'valid_id',
         name: 'valid_name',
@@ -24,7 +24,7 @@ const makeAddAccountUseCaseStub = () => {
 
 const makeEmailValidatorStub = () => {
   class EmailValidatorStub implements EmailValidator {
-    isValid (email: string) { return true }
+    isValid (email: string): boolean { return true }
   }
 
   return new EmailValidatorStub()
