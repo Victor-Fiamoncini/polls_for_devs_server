@@ -11,8 +11,8 @@ export class DbAddAccountUseCase implements AddAccountUseCase.UseCase {
   async add (account: AddAccountUseCase.Params): Promise<AccountEntity> {
     const hashedPassword = await this.encrypter.encrypt(account.password)
 
-    await this.addAccountRepository.add({ ...account, password: hashedPassword })
+    const createdAccount = await this.addAccountRepository.add({ ...account, password: hashedPassword })
 
-    return new Promise(resolve => resolve(null))
+    return createdAccount
   }
 }
