@@ -6,7 +6,7 @@ RegexEmailValidator.prototype.isValid = jest.fn(() => true)
 
 const makeSut = () => new RegexEmailValidator()
 
-describe('EmailValidator', () => {
+describe('RegexEmailValidator', () => {
   it('should return false if validator returns false', () => {
     const sut = makeSut()
 
