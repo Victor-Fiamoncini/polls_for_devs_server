@@ -11,7 +11,6 @@ export default {
   },
   preset: '@shelf/jest-mongodb',
   roots: ['<rootDir>/src'],
-  testEnvironment: 'node',
   testMatch: ['**/*.test.ts'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   transform: {
