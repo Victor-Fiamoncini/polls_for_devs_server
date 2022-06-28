@@ -9,7 +9,7 @@ export default {
   moduleNameMapper: {
     'src/(.*)': '<rootDir>/src/$1'
   },
-  preset: 'ts-jest',
+  preset: '@shelf/jest-mongodb',
   roots: ['<rootDir>/src'],
   testEnvironment: 'node',
   testMatch: ['**/*.test.ts'],
