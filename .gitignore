@@ -136,3 +136,15 @@ dist
 
 # SvelteKit build / generate output
 .svelte-kit
+
+# Jest MongoDB
+<<<<<<< HEAD
+<<<<<<< HEAD
+*globalConfig.json
+=======
+./globalConfig.json
+>>>>>>> e2ada02... chore: add jest-mongodb globalConfig in gitignore
+=======
+*globalConfig.json
+>>>>>>> 4bd6644... chore: add jest-mongodb globalConfig in gitignore
+
