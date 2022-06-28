@@ -11,8 +11,11 @@ export class MongoDbAccountRepository implements AddAccountRepository.Repository
       projection: { _id: 1, name: 1, email: 1, password: 1 }
     })
 
-    const { _id, ...accountWithoutMongoId } = createdAccount
-
-    return { ...accountWithoutMongoId, id: _id.toString() } as AccountModel
+    return {
+      id: createdAccount._id.toString(),
+      name: createdAccount.name,
+      email: createdAccount.email,
+      password: createdAccount.password
+    }
   }
 }

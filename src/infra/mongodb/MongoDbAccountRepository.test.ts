@@ -7,6 +7,10 @@ describe('MongoDbAccountRepository', () => {
     await MongoHelper.connect()
   })
 
+  beforeEach(async () => {
+    await MongoHelper.getCollection('accounts').deleteMany({})
+  })
+
   afterAll(async () => {
     await MongoHelper.disconnect()
   })
