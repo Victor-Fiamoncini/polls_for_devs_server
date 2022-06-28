@@ -4,7 +4,7 @@ const makeSut = () => new MongoDbAccountRepository()
 
 describe('MongoDbAccountRepository', () => {
   beforeAll(async () => {
-    await MongoHelper.connect()
+    await MongoHelper.connect(global.__MONGO_URI__)
   })
 
   beforeEach(async () => {
