@@ -8,9 +8,8 @@
     "build": "babel src --extensions \".js,.ts\" --out-dir build --copy-files --no-copy-ignored",
     "start": "node build/main/server.js",
     "prepare": "husky install",
-    "test": "jest --passWithNoTests --no-cache --silent --noStackTrace --runInBand",
-    "test:verbose": "jest --passWithNoTests --no-cache --runInBand",
-    "test:unit": "npm test -- --watch",
+    "test": "jest --passWithNoTests --no-cache --noStackTrace --runInBand",
+    "test:unit": "npm test -- --watch -c jest-unit.config.ts",
     "test:integration": "npm test -- --watch -c jest-integration.config.ts",
     "test:staged": "npm test --findRelatedTests",
     "test:ci": "npm test -- --coverage"

@@ -1,7 +1,7 @@
 import { Config } from 'jest'
 
 export default {
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!<rootDir>/src/main/**'],
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
   coverageReporters: ['lcov', 'json'],
@@ -11,7 +11,7 @@ export default {
   },
   preset: '@shelf/jest-mongodb',
   roots: ['<rootDir>/src'],
-  testMatch: ['**/*.test.ts'],
+  testMatch: ['**/*.(spec|test).ts'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   transform: {
     '.+\\.ts$': 'ts-jest'
