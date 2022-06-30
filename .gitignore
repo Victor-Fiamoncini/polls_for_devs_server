@@ -139,3 +139,6 @@ dist
 
 # Jest MongoDB
 globalConfig.json
+
+# Docker
+.docker
