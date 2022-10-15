@@ -1,8 +1,6 @@
 import { AddAccountUseCase } from 'src/domain'
 
-import { Controller } from 'src/presentation/contracts'
-import { InvalidParamError, MissingParamError } from 'src/presentation/errors'
-import { badRequest, created, HttpRequest, serverError } from 'src/presentation/http'
+import { Controller, InvalidParamError, MissingParamError, badRequest, created, HttpRequest, serverError } from 'src/presentation'
 
 import { EmailValidator } from 'src/validation'
 

@@ -1,4 +1,4 @@
-import { RegexEmailValidator } from 'src/validation/validators'
+import { RegexEmailValidator } from 'src/validation'
 
 jest.mock('src/validation/validators/RegexEmailValidator')
 

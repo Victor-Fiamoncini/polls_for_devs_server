@@ -1,4 +1,4 @@
-import { MongoDbAccountRepository, MongoHelper } from 'src/infra/mongodb'
+import { MongoDbAccountRepository, MongoHelper } from 'src/infra'
 
 const makeSut = () => new MongoDbAccountRepository()
 

@@ -1,4 +1,4 @@
-import { AddAccountRepository, Encrypter } from 'src/data/contracts'
+import { AddAccountRepository, Encrypter } from 'src/data'
 
 import { AccountEntity, AddAccountUseCase } from 'src/domain'
 

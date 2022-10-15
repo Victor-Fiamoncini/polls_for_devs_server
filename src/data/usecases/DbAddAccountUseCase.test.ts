@@ -1,6 +1,4 @@
-import { AddAccountRepository, Encrypter } from 'src/data/contracts'
-import { AccountModel } from 'src/data/models'
-import { DbAddAccountUseCase } from 'src/data/usecases'
+import { AddAccountRepository, AccountModel, DbAddAccountUseCase, Encrypter } from 'src/data'
 
 const makeAddAccountRepositoryStub = () => {
   class AddAccountRepositoryStub implements AddAccountRepository.Repository {

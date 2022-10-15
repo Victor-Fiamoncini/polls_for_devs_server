@@ -1,4 +1,4 @@
-import { ServerError } from 'src/presentation/errors'
+import { ServerError } from 'src/presentation'
 
 export interface HttpResponse {
   statusCode: 200 | 201 | 204 | 400 | 401 | 403 | 404 | 500

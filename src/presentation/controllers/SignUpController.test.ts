@@ -1,7 +1,6 @@
 import { AccountEntity, AddAccountUseCase } from 'src/domain'
 
-import { SignUpController } from 'src/presentation/controllers'
-import { InvalidParamError, MissingParamError, ServerError } from 'src/presentation/errors'
+import { SignUpController, InvalidParamError, MissingParamError, ServerError } from 'src/presentation'
 
 import { EmailValidator } from 'src/validation'
 
