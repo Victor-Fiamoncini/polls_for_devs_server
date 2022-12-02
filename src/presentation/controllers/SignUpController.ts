@@ -2,18 +2,25 @@ import { AddAccountUseCase } from 'src/domain'
 
 import { Controller, InvalidParamError, MissingParamError, badRequest, created, HttpRequest, serverError } from 'src/presentation'
 
-import { EmailValidator } from 'src/validation'
+import { EmailValidator, Validator } from 'src/validation'
 
 export class SignUpController implements Controller {
   private readonly requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
 
   constructor (
     private readonly emailValidator: EmailValidator,
-    private readonly addAccountUseCase: AddAccountUseCase.UseCase
+    private readonly addAccountUseCase: AddAccountUseCase.UseCase,
+    private readonly validator: Validator
   ) { }
 
   async handle (httpRequest: HttpRequest) {
     try {
+      const error = this.validator.validate(httpRequest?.body)
+
+      if (error) {
+        return badRequest(error)
+      }
+
       for (const field of this.requiredFields) {
         if (!httpRequest?.body[field]) {
           return badRequest(new MissingParamError(field))
