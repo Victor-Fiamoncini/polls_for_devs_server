@@ -3,6 +3,7 @@ import { DbAddAccountUseCase } from 'src/data'
 import { BcryptEncrypter, MongoDbAccountRepository, MongoDbLogErrorRepository } from 'src/infra'
 
 import { ControllerWithLogDecorator } from 'src/main/decorators'
+import { makeSignUpValidation } from 'src/main/factories'
 
 import { Controller, SignUpController } from 'src/presentation'
 
@@ -16,7 +17,9 @@ export const makeSignUpController = (): Controller => {
   const emailValidator = new RegexEmailValidator()
   const addAccountUseCase = new DbAddAccountUseCase(encrypter, addAccountRepository)
 
-  const signUpController = new SignUpController(emailValidator, addAccountUseCase)
+  const validatorComposite = makeSignUpValidation()
+
+  const signUpController = new SignUpController(emailValidator, addAccountUseCase, validatorComposite)
 
   return new ControllerWithLogDecorator(signUpController, logErrorRepository)
 }
