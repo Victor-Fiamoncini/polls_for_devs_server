@@ -15,12 +15,12 @@ export class SignUpController implements Controller {
   async handle (httpRequest: HttpRequest) {
     try {
       for (const field of this.requiredFields) {
-        if (!httpRequest.body[field]) {
+        if (!httpRequest?.body[field]) {
           return badRequest(new MissingParamError(field))
         }
       }
 
-      const { name, email, password, passwordConfirmation } = httpRequest.body
+      const { name, email, password, passwordConfirmation } = httpRequest?.body
 
       if (password !== passwordConfirmation) {
         return badRequest(new InvalidParamError('passwordConfirmation'))
