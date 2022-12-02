@@ -1,4 +1,4 @@
-import { ServerError } from 'src/presentation'
+import { ServerError, UnauthorizedError } from 'src/presentation'
 
 export interface HttpResponse {
   statusCode: 200 | 201 | 204 | 400 | 401 | 403 | 404 | 500
@@ -6,6 +6,8 @@ export interface HttpResponse {
 }
 
 export const badRequest = (error: Error): HttpResponse => ({ statusCode: 400, body: error })
+
+export const unauthorized = (): HttpResponse => ({ statusCode: 401, body: new UnauthorizedError() })
 
 export const serverError = (error: Error): HttpResponse => ({ statusCode: 500, body: new ServerError(error.stack) })
 
