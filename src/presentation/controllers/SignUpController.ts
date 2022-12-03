@@ -1,12 +1,11 @@
 import { AddAccountUseCase } from 'src/domain'
 
-import { Controller, InvalidParamError, badRequest, created, HttpRequest, serverError } from 'src/presentation'
+import { Controller, badRequest, created, HttpRequest, serverError } from 'src/presentation'
 
-import { EmailValidator, Validator } from 'src/validation'
+import { Validator } from 'src/validation'
 
 export class SignUpController implements Controller {
   constructor (
-    private readonly emailValidator: EmailValidator,
     private readonly addAccountUseCase: AddAccountUseCase.UseCase,
     private readonly validator: Validator
   ) { }
@@ -20,12 +19,6 @@ export class SignUpController implements Controller {
       }
 
       const { name, email, password } = httpRequest?.body
-
-      const isEmailValid = this.emailValidator.isValid(email)
-
-      if (!isEmailValid) {
-        return badRequest(new InvalidParamError('email'))
-      }
 
       const account = await this.addAccountUseCase.add({ email, name, password })
 
