@@ -5,6 +5,6 @@ export namespace AuthenticationUseCase {
   }
 
   export interface UseCase {
-    auth(account: AuthenticationUseCase.Params): Promise<string>
+    auth(credentials: AuthenticationUseCase.Params): Promise<string>
   }
 }
