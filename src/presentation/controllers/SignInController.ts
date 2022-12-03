@@ -1,14 +1,14 @@
 import { AuthenticationUseCase } from 'src/domain'
 
-import { Controller, HttpRequest, MissingParamError, InvalidParamError, badRequest, serverError, unauthorized, ok } from 'src/presentation'
+import { Controller, HttpRequest, MissingParamError, badRequest, serverError, unauthorized, ok } from 'src/presentation'
 
-import { EmailValidator } from 'src/validation'
+import { Validator } from 'src/validation'
 
 export class SignInController implements Controller {
   private readonly requiredFields = ['email', 'password']
 
   constructor (
-    private readonly emailValidator: EmailValidator,
+    private readonly emailValidator: Validator,
     private readonly authenticationUseCase: AuthenticationUseCase.UseCase
   ) { }
 
@@ -22,10 +22,10 @@ export class SignInController implements Controller {
 
       const { email, password } = httpRequest?.body
 
-      const isEmailValid = this.emailValidator.isValid(email)
+      const emailValidationError = this.emailValidator.validate(email)
 
-      if (!isEmailValid) {
-        return badRequest(new InvalidParamError('email'))
+      if (emailValidationError) {
+        return badRequest(emailValidationError)
       }
 
       const accessToken = await this.authenticationUseCase.auth({ email, password })

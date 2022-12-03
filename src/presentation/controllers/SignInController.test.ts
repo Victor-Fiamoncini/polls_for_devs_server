@@ -2,7 +2,7 @@ import { AuthenticationUseCase } from 'src/domain'
 
 import { SignInController, MissingParamError, InvalidParamError, badRequest, serverError, unauthorized, ok } from 'src/presentation'
 
-import { EmailValidator } from 'src/validation'
+import { Validator } from 'src/validation'
 
 const makeAuthenticationUseCaseStub = () => {
   class AuthenticationUseCaseStub implements AuthenticationUseCase.UseCase {
@@ -15,8 +15,10 @@ const makeAuthenticationUseCaseStub = () => {
 }
 
 const makeEmailValidatorStub = () => {
-  class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean { return true }
+  class EmailValidatorStub implements Validator {
+    validate (input: any): Error {
+      return null
+    }
   }
 
   return new EmailValidatorStub()
@@ -62,7 +64,7 @@ describe('SignInController', () => {
   it('should call EmailValidator with correct email', async () => {
     const { emailValidator, sut } = makeSut()
 
-    const isValidSpy = jest.spyOn(emailValidator, 'isValid')
+    const isValidSpy = jest.spyOn(emailValidator, 'validate')
 
     const httpRequest = {
       body: { email: 'any_email@mail.com', password: 'any_password' }
@@ -76,7 +78,7 @@ describe('SignInController', () => {
   it('should return 400 if an invalid email is provided', async () => {
     const { emailValidator, sut } = makeSut()
 
-    jest.spyOn(emailValidator, 'isValid').mockReturnValueOnce(false)
+    jest.spyOn(emailValidator, 'validate').mockReturnValueOnce(new InvalidParamError('email'))
 
     const httpRequest = {
       body: { email: 'any_email@mail.com', password: 'any_password' }
@@ -90,7 +92,7 @@ describe('SignInController', () => {
   it('should return 500 if EmailValidator throws', async () => {
     const { emailValidator, sut } = makeSut()
 
-    jest.spyOn(emailValidator, 'isValid').mockImplementationOnce(() => {
+    jest.spyOn(emailValidator, 'validate').mockImplementationOnce(() => {
       throw new Error()
     })
 
