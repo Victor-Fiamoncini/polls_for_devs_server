@@ -1,6 +1,6 @@
 import { makeSignUpValidation as sut } from 'src/main/factories'
 
-import { RequiredFieldValidator, ValidatorComposite } from 'src/validation'
+import { CompareFieldsValidator, RequiredFieldValidator, ValidatorComposite } from 'src/validation'
 
 jest.mock('src/validation/validators/ValidatorComposite')
 
@@ -12,7 +12,8 @@ describe('signUpValidation', () => {
       new RequiredFieldValidator('name'),
       new RequiredFieldValidator('email'),
       new RequiredFieldValidator('password'),
-      new RequiredFieldValidator('passwordConfirmation')
+      new RequiredFieldValidator('passwordConfirmation'),
+      new CompareFieldsValidator('password', 'passwordConfirmation')
     ])
   })
 })
