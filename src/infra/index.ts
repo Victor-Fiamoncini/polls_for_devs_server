@@ -1,2 +1,2 @@
-export * from 'src/infra/encrypter'
+export * from 'src/infra/hash'
 export * from 'src/infra/mongodb'
