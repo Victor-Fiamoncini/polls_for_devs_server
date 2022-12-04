@@ -6,7 +6,7 @@ import { Validator } from 'src/validation'
 
 const makeAuthenticationUseCaseStub = () => {
   class AuthenticationUseCaseStub implements AuthenticationUseCase.UseCase {
-    async auth (params: AuthenticationUseCase.Params): Promise<string> {
+    async auth (credentials: AuthenticationUseCase.Params): Promise<string> {
       return new Promise(resolve => resolve('any_token'))
     }
   }
