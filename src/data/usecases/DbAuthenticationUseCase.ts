@@ -1,4 +1,4 @@
-import { LoadAccountByEmailRepository, HashComparator, TokenGenerator, UpdateAccessTokenRepository } from 'src/data'
+import { LoadAccountByEmailRepository, HashComparator, Encrypter, UpdateAccessTokenRepository } from 'src/data'
 
 import { AuthenticationUseCase } from 'src/domain'
 
@@ -6,7 +6,7 @@ export class DbAuthenticationUseCase implements AuthenticationUseCase.UseCase {
   constructor (
     private readonly loadAccountByEmailRepository:LoadAccountByEmailRepository.Repository,
     private readonly hashComparator: HashComparator.Comparator,
-    private readonly tokenGenerator: TokenGenerator,
+    private readonly encrypter: Encrypter,
     private readonly updateAccessTokenRepository: UpdateAccessTokenRepository.Repository
   ) {}
 
@@ -19,7 +19,7 @@ export class DbAuthenticationUseCase implements AuthenticationUseCase.UseCase {
 
     if (!isValid) return null
 
-    const accessToken = await this.tokenGenerator.generate(account.id)
+    const accessToken = await this.encrypter.encrypt(account.id)
 
     if (!accessToken) return null
 
