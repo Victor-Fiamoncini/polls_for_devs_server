@@ -1,5 +1,5 @@
 import config from './jest.config'
 
-config.testMatch = ['**/*.spec.ts']
+config.testMatch = ['**/*.integration.test.ts']
 
 export default config
