@@ -11,7 +11,7 @@ export class DbAuthenticationUseCase implements AuthenticationUseCase.UseCase {
   ) {}
 
   async auth ({ email, password }: AuthenticationUseCase.Params): Promise<string> {
-    const account = await this.loadAccountByEmailRepository.load({ email })
+    const account = await this.loadAccountByEmailRepository.loadByEmail({ email })
 
     if (!account) return null
 
@@ -23,7 +23,7 @@ export class DbAuthenticationUseCase implements AuthenticationUseCase.UseCase {
 
     if (!accessToken) return null
 
-    await this.updateAccessTokenRepository.update({ id: account.id, token: accessToken })
+    await this.updateAccessTokenRepository.updateAccessToken({ id: account.id, token: accessToken })
 
     return accessToken
   }

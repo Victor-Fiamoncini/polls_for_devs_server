@@ -6,6 +6,6 @@ export namespace LoadAccountByEmailRepository {
   }
 
   export interface Repository {
-    load(params: LoadAccountByEmailRepository.Params): Promise<AccountModel>
+    loadByEmail(params: LoadAccountByEmailRepository.Params): Promise<AccountModel>
   }
 }
