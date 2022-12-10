@@ -1,1 +1,1 @@
-export * from 'src/infra/hash/BcryptHasher'
+export * from 'src/infra/hash/BcryptAdapter'

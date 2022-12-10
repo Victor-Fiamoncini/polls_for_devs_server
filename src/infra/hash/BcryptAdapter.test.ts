@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 
-import { BcryptHasher } from 'src/infra'
+import { BcryptAdapter } from 'src/infra'
 
 jest.mock('bcrypt', () => ({
   async hash (): Promise<string> {
@@ -12,9 +12,9 @@ jest.mock('bcrypt', () => ({
 }))
 
 const salt = 12
-const makeSut = () => new BcryptHasher(salt)
+const makeSut = () => new BcryptAdapter(salt)
 
-describe('BcryptHasher', () => {
+describe('BcryptAdapter', () => {
   it('should call hash with correct values', async () => {
     const sut = makeSut()
 
@@ -50,15 +50,24 @@ describe('BcryptHasher', () => {
 
     const compareSpy = jest.spyOn(bcrypt, 'compare')
 
-    await sut.compare({ plainPayload: 'any_plain_payload', hashedPayload: 'any_hashed_payload' })
+    await sut.compare({
+      plainPayload: 'any_plain_payload',
+      hashedPayload: 'any_hashed_payload'
+    })
 
-    expect(compareSpy).toHaveBeenCalledWith('any_plain_payload', 'any_hashed_payload')
+    expect(compareSpy).toHaveBeenCalledWith(
+      'any_plain_payload',
+      'any_hashed_payload'
+    )
   })
 
   it('should return true if compare succeeds', async () => {
     const sut = makeSut()
 
-    const isValid = await sut.compare({ plainPayload: 'any_plain_payload', hashedPayload: 'any_hashed_payload' })
+    const isValid = await sut.compare({
+      plainPayload: 'any_plain_payload',
+      hashedPayload: 'any_hashed_payload'
+    })
 
     expect(isValid).toBe(true)
   })
@@ -68,7 +77,10 @@ describe('BcryptHasher', () => {
 
     jest.spyOn(bcrypt, 'compare').mockImplementationOnce(() => false)
 
-    const isValid = await sut.compare({ plainPayload: 'any_plain_payload', hashedPayload: 'any_hashed_payload' })
+    const isValid = await sut.compare({
+      plainPayload: 'any_plain_payload',
+      hashedPayload: 'any_hashed_payload'
+    })
 
     expect(isValid).toBe(false)
   })
@@ -76,9 +88,16 @@ describe('BcryptHasher', () => {
   it('should throw if compare throws', async () => {
     const sut = makeSut()
 
-    jest.spyOn(bcrypt, 'compare').mockImplementationOnce(() => new Promise((resolve, reject) => reject(new Error())))
+    jest
+      .spyOn(bcrypt, 'compare')
+      .mockImplementationOnce(
+        () => new Promise((resolve, reject) => reject(new Error()))
+      )
 
-    const comparePromise = sut.compare({ plainPayload: 'any_plain_payload', hashedPayload: 'any_hashed_payload' })
+    const comparePromise = sut.compare({
+      plainPayload: 'any_plain_payload',
+      hashedPayload: 'any_hashed_payload'
+    })
 
     await expect(comparePromise).rejects.toThrow()
   })
