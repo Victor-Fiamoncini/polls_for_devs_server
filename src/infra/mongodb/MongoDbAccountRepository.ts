@@ -1,8 +1,8 @@
-import { AccountModel, AddAccountRepository } from 'src/data'
+import { AccountModel, AddAccountRepository, LoadAccountByEmailRepository } from 'src/data'
 
 import { MongoHelper } from 'src/infra'
 
-export class MongoDbAccountRepository implements AddAccountRepository.Repository {
+export class MongoDbAccountRepository implements AddAccountRepository.Repository, LoadAccountByEmailRepository.Repository {
   async add (account: AddAccountRepository.Params): Promise<AccountModel> {
     const accountColletion = await MongoHelper.getCollection('accounts')
 
@@ -16,6 +16,23 @@ export class MongoDbAccountRepository implements AddAccountRepository.Repository
       name: createdAccount.name,
       email: createdAccount.email,
       password: createdAccount.password
+    }
+  }
+
+  async loadByEmail ({ email }: LoadAccountByEmailRepository.Params): Promise<AccountModel> {
+    const accountColletion = await MongoHelper.getCollection('accounts')
+
+    const account = await accountColletion.findOne({ email }, {
+      projection: { _id: 1, name: 1, email: 1, password: 1 }
+    })
+
+    if (!account) return null
+
+    return {
+      id: account._id.toString(),
+      name: account.name,
+      email: account.email,
+      password: account.password
     }
   }
 }
