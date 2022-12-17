@@ -4,7 +4,7 @@ import { MongoHelper } from 'src/infra'
 
 import { app } from 'src/main/config/app'
 
-describe('signUpRoutes', () => {
+describe('loginRoutes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(global.__MONGO_URI__)
   })
@@ -19,15 +19,17 @@ describe('signUpRoutes', () => {
     await MongoHelper.disconnect()
   })
 
-  it('should return an account on success', async () => {
-    await request(app)
-      .post('/api/signup')
-      .send({
-        name: 'Victor',
-        email: 'victor@mail.com',
-        password: 'password12',
-        passwordConfirmation: 'password12'
-      })
-      .expect(201)
+  describe('POST /signup', () => {
+    it('should return an account on success', async () => {
+      await request(app)
+        .post('/api/signup')
+        .send({
+          name: 'Victor',
+          email: 'victor@mail.com',
+          password: 'password12',
+          passwordConfirmation: 'password12'
+        })
+        .expect(201)
+    })
   })
 })
