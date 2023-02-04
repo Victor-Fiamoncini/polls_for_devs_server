@@ -1,16 +1,20 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./build",
     "target": "ES2019",
     "module": "commonjs",
     "esModuleInterop": true,
     "allowJs": true,
     "baseUrl": ".",
-    "rootDirs": ["src"],
     "paths": {
-      "*": ["*"]
+      "@/data/*": ["./src/data/*"],
+      "@/domain/*": ["./src/domain/*"],
+      "@/infra/*": ["./src/infra/*"],
+      "@/main/*": ["./src/main/*"],
+      "@/presentation/*": ["./src/presentation/*"],
+      "@/validation/*": ["./src/validation/*"]
     }
   },
   "include": ["./src"],
-  "exclude": ["./dist"]
+  "exclude": ["./build"]
 }

@@ -142,3 +142,6 @@ globalConfig.json
 
 # Docker
 .docker
+
+# Build
+build
