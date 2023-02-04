@@ -2,33 +2,48 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    jest: true
+    jest: true,
   },
-  extends: ['standard'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    ecmaVersion: 12,
+    sourceType: 'module',
   },
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+    process: true,
+    module: true,
+    export: true,
+    __dirname: true,
+    require: true,
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+  ],
   plugins: ['@typescript-eslint', 'eslint-plugin-import-helpers'],
   rules: {
     'no-useless-constructor': 'off',
+    '@typescript-eslint/no-namespace': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
     'import-helpers/order-imports': [
       'warn',
       {
         newlinesBetween: 'always',
         groups: [
           'module',
-          '/^src/data/',
-          '/^src/domain/',
-          '/^src/infra/',
-          '/^src/main/',
-          '/^src/presentation/',
-          '/^src/validation/',
-          ['parent', 'sibling', 'index']
+          '/^@/data/',
+          '/^@/domain/',
+          '/^@/infra/',
+          '/^@/main/',
+          '/^@/presentation/',
+          '/^@/validation/',
+          ['parent', 'sibling', 'index'],
         ],
-        alphabetize: { order: 'asc', ignoreCase: true }
-      }
-    ]
-  }
+        alphabetize: { order: 'asc', ignoreCase: true },
+      },
+    ],
+  },
 }
