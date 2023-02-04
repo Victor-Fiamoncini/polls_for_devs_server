@@ -1,6 +1,6 @@
-import { MissingParamError } from 'src/presentation'
+import { MissingParamError } from '@/presentation/errors/MissingParamError'
 
-import { RequiredFieldValidator } from 'src/validation'
+import { RequiredFieldValidator } from '@/validation/validators/RequiredFieldValidator'
 
 const makeSut = () => new RequiredFieldValidator('any_field')
 
@@ -8,7 +8,9 @@ describe('RequiredFieldValidator', () => {
   it('should return a MissingParamError if validation fails', () => {
     const sut = makeSut()
 
-    const error = sut.validate({ any_other_field_name: 'any_other_field_value' })
+    const error = sut.validate({
+      any_other_field_name: 'any_other_field_value',
+    })
 
     expect(error).toEqual(new MissingParamError('any_field'))
   })

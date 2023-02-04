@@ -2,9 +2,9 @@ import { hash } from 'bcrypt'
 import { Collection } from 'mongodb'
 import request from 'supertest'
 
-import { MongoHelper } from 'src/infra'
+import { MongoHelper } from '@/infra/mongodb/MongoHelper'
 
-import { app } from 'src/main/config/app'
+import { app } from '@/main/config/app'
 
 describe('loginRoutes', () => {
   let accountCollection: Collection
@@ -31,7 +31,7 @@ describe('loginRoutes', () => {
           name: 'Victor',
           email: 'victor@mail.com',
           password: 'password12',
-          passwordConfirmation: 'password12'
+          passwordConfirmation: 'password12',
         })
         .expect(201)
     })
@@ -42,14 +42,14 @@ describe('loginRoutes', () => {
       await accountCollection.insertOne({
         name: 'Victor',
         email: 'victor@mail.com',
-        password: await hash('password12', 12)
+        password: await hash('password12', 12),
       })
 
       await request(app)
         .post('/api/signin')
         .send({
           email: 'victor@mail.com',
-          password: 'password12'
+          password: 'password12',
         })
         .expect(200)
     })
@@ -59,7 +59,7 @@ describe('loginRoutes', () => {
         .post('/api/signin')
         .send({
           email: 'victor@mail.com',
-          password: 'password12'
+          password: 'password12',
         })
         .expect(401)
     })

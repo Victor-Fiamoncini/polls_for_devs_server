@@ -1,4 +1,4 @@
-import { AccountModel } from 'src/data'
+import { AccountModel } from '@/data/models/AccountModel'
 
 export namespace AddAccountRepository {
   export type Params = {

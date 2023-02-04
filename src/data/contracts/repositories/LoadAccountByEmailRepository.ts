@@ -1,4 +1,4 @@
-import { AccountModel } from 'src/data'
+import { AccountModel } from '@/data/models/AccountModel'
 
 export namespace LoadAccountByEmailRepository {
   export type Params = {
@@ -6,6 +6,8 @@ export namespace LoadAccountByEmailRepository {
   }
 
   export interface Repository {
-    loadByEmail(params: LoadAccountByEmailRepository.Params): Promise<AccountModel>
+    loadByEmail(
+      params: LoadAccountByEmailRepository.Params
+    ): Promise<AccountModel>
   }
 }

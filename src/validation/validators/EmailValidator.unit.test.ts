@@ -1,6 +1,6 @@
-import { InvalidParamError } from 'src/presentation'
+import { InvalidParamError } from '@/presentation/errors/InvalidParamError'
 
-import { EmailValidator } from 'src/validation'
+import { EmailValidator } from '@/validation/validators/EmailValidator'
 
 const makeSut = () => new EmailValidator('any_field')
 

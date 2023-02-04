@@ -1,6 +1,7 @@
 import { Collection } from 'mongodb'
 
-import { MongoDbLogErrorRepository, MongoHelper } from 'src/infra'
+import { MongoDbLogErrorRepository } from '@/infra/mongodb/MongoDbLogErrorRepository'
+import { MongoHelper } from '@/infra/mongodb/MongoHelper'
 
 const makeSut = () => new MongoDbLogErrorRepository()
 

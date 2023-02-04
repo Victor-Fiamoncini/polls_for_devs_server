@@ -1,16 +1,23 @@
-import { AddAccountUseCase } from 'src/domain'
+import { AddAccountUseCase } from '@/domain/usecases/AddAccountUseCase'
 
-import { Controller, badRequest, created, HttpRequest, serverError, HttpResponse } from 'src/presentation'
+import { Controller } from '@/presentation/contracts/Controller'
+import { HttpRequest } from '@/presentation/http/HttpRequest'
+import {
+  badRequest,
+  created,
+  HttpResponse,
+  serverError,
+} from '@/presentation/http/HttpResponse'
 
-import { Validator } from 'src/validation'
+import { Validator } from '@/validation/contracts/Validator'
 
 export class SignUpController implements Controller {
-  constructor (
+  constructor(
     private readonly addAccountUseCase: AddAccountUseCase.UseCase,
     private readonly validator: Validator
   ) {}
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const error = this.validator.validate(httpRequest?.body)
 
@@ -18,9 +25,13 @@ export class SignUpController implements Controller {
         return badRequest(error)
       }
 
-      const { name, email, password } = httpRequest?.body
+      const { name, email, password } = httpRequest.body
 
-      const account = await this.addAccountUseCase.add({ email, name, password })
+      const account = await this.addAccountUseCase.add({
+        email,
+        name,
+        password,
+      })
 
       return created(account)
     } catch (err) {

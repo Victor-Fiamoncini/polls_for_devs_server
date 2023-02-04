@@ -1,8 +1,11 @@
-import { makeSignUpValidation as sut } from 'src/main/factories'
+import { makeSignUpValidation as sut } from '@/main/factories/signUpValidation'
 
-import { CompareFieldsValidator, EmailValidator, RequiredFieldValidator, ValidatorComposite } from 'src/validation'
+import { CompareFieldsValidator } from '@/validation/validators/CompareFieldsValidator'
+import { EmailValidator } from '@/validation/validators/EmailValidator'
+import { RequiredFieldValidator } from '@/validation/validators/RequiredFieldValidator'
+import { ValidatorComposite } from '@/validation/validators/ValidatorComposite'
 
-jest.mock('src/validation/validators/ValidatorComposite')
+jest.mock('@/validation/validators/ValidatorComposite')
 
 describe('signUpValidation', () => {
   it('should call ValidatorComposite with all validators', () => {
@@ -14,7 +17,7 @@ describe('signUpValidation', () => {
       new RequiredFieldValidator('password'),
       new RequiredFieldValidator('passwordConfirmation'),
       new CompareFieldsValidator('password', 'passwordConfirmation'),
-      new EmailValidator('email')
+      new EmailValidator('email'),
     ])
   })
 })

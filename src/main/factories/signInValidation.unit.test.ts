@@ -1,8 +1,10 @@
-import { makeSignInValidation as sut } from 'src/main/factories'
+import { makeSignInValidation as sut } from '@/main/factories/signInValidation'
 
-import { EmailValidator, RequiredFieldValidator, ValidatorComposite } from 'src/validation'
+import { EmailValidator } from '@/validation/validators/EmailValidator'
+import { RequiredFieldValidator } from '@/validation/validators/RequiredFieldValidator'
+import { ValidatorComposite } from '@/validation/validators/ValidatorComposite'
 
-jest.mock('src/validation/validators/ValidatorComposite')
+jest.mock('@/validation/validators/ValidatorComposite')
 
 describe('signInValidation', () => {
   it('should call ValidatorComposite with all validators', () => {
@@ -11,7 +13,7 @@ describe('signInValidation', () => {
     expect(ValidatorComposite).toHaveBeenCalledWith([
       new RequiredFieldValidator('email'),
       new RequiredFieldValidator('password'),
-      new EmailValidator('email')
+      new EmailValidator('email'),
     ])
   })
 })

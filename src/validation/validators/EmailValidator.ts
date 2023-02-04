@@ -1,13 +1,14 @@
-import { InvalidParamError } from 'src/presentation'
+import { InvalidParamError } from '@/presentation/errors/InvalidParamError'
 
-import { Validator } from 'src/validation'
+import { Validator } from '@/validation/contracts/Validator'
 
 export class EmailValidator implements Validator {
-  private readonly emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  private readonly emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
-  constructor (private readonly fieldName: string) {}
+  constructor(private readonly fieldName: string) {}
 
-  validate (input: any): Error {
+  validate(input: any): Error {
     if (!this.emailRegex.test(input[this.fieldName])) {
       return new InvalidParamError(this.fieldName)
     }

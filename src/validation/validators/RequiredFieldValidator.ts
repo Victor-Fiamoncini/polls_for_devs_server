@@ -1,11 +1,11 @@
-import { MissingParamError } from 'src/presentation'
+import { MissingParamError } from '@/presentation/errors/MissingParamError'
 
-import { Validator } from 'src/validation'
+import { Validator } from '@/validation/contracts/Validator'
 
 export class RequiredFieldValidator implements Validator {
-  constructor (private readonly fieldName: string) {}
+  constructor(private readonly fieldName: string) {}
 
-  validate (input: any): Error {
+  validate(input: any): Error {
     if (!input[this.fieldName]) {
       return new MissingParamError(this.fieldName)
     }

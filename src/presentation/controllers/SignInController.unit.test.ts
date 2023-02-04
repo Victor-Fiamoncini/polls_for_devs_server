@@ -1,12 +1,19 @@
-import { AuthenticationUseCase } from 'src/domain'
+import { AuthenticationUseCase } from '@/domain/usecases/AuthenticationUseCase'
 
-import { SignInController, MissingParamError, badRequest, serverError, unauthorized, ok } from 'src/presentation'
+import { SignInController } from '@/presentation/controllers/SignInController'
+import { MissingParamError } from '@/presentation/errors/MissingParamError'
+import {
+  badRequest,
+  ok,
+  serverError,
+  unauthorized,
+} from '@/presentation/http/HttpResponse'
 
-import { Validator } from 'src/validation'
+import { Validator } from '@/validation/contracts/Validator'
 
 const makeAuthenticationUseCaseStub = () => {
   class AuthenticationUseCaseStub implements AuthenticationUseCase.UseCase {
-    async auth (credentials: AuthenticationUseCase.Params): Promise<string> {
+    async auth(credentials: AuthenticationUseCase.Params): Promise<string> {
       return new Promise(resolve => resolve('any_token'))
     }
   }
@@ -16,7 +23,7 @@ const makeAuthenticationUseCaseStub = () => {
 
 const makeValidatorStub = () => {
   class ValidatorStub implements Validator {
-    validate (input: any): Error {
+    validate(input: any): Error {
       return null
     }
   }
@@ -32,7 +39,7 @@ const makeSut = () => {
   return {
     authenticationUseCaseStub,
     validatorStub,
-    sut
+    sut,
   }
 }
 
@@ -43,21 +50,26 @@ describe('SignInController', () => {
     const authSpy = jest.spyOn(authenticationUseCaseStub, 'auth')
 
     const httpRequest = {
-      body: { email: 'any_email@mail.com', password: 'any_password' }
+      body: { email: 'any_email@mail.com', password: 'any_password' },
     }
 
     await sut.handle(httpRequest)
 
-    expect(authSpy).toHaveBeenCalledWith({ email: 'any_email@mail.com', password: 'any_password' })
+    expect(authSpy).toHaveBeenCalledWith({
+      email: 'any_email@mail.com',
+      password: 'any_password',
+    })
   })
 
   it('should return 401 if invalid credentials are provided', async () => {
     const { authenticationUseCaseStub, sut } = makeSut()
 
-    jest.spyOn(authenticationUseCaseStub, 'auth').mockReturnValueOnce(new Promise(resolve => resolve(null)))
+    jest
+      .spyOn(authenticationUseCaseStub, 'auth')
+      .mockReturnValueOnce(new Promise(resolve => resolve(null)))
 
     const httpRequest = {
-      body: { email: 'any_email@mail.com', password: 'any_password' }
+      body: { email: 'any_email@mail.com', password: 'any_password' },
     }
 
     const httpReponse = await sut.handle(httpRequest)
@@ -73,7 +85,7 @@ describe('SignInController', () => {
     })
 
     const httpRequest = {
-      body: { email: 'any_email@mail.com', password: 'any_password' }
+      body: { email: 'any_email@mail.com', password: 'any_password' },
     }
 
     const httpResponse = await sut.handle(httpRequest)
@@ -85,7 +97,7 @@ describe('SignInController', () => {
     const { sut } = makeSut()
 
     const httpRequest = {
-      body: { email: 'any_email@mail.com', password: 'any_password' }
+      body: { email: 'any_email@mail.com', password: 'any_password' },
     }
 
     const httpReponse = await sut.handle(httpRequest)
@@ -103,8 +115,8 @@ describe('SignInController', () => {
         name: 'valid_name',
         email: 'valid_email@mail.com',
         password: 'valid_password',
-        passwordConfirmation: 'valid_password'
-      }
+        passwordConfirmation: 'valid_password',
+      },
     }
 
     await sut.handle(httpRequest)
@@ -115,15 +127,17 @@ describe('SignInController', () => {
   it('should return 400 if Validator returns an error', async () => {
     const { sut, validatorStub } = makeSut()
 
-    jest.spyOn(validatorStub, 'validate').mockReturnValueOnce(new MissingParamError('any_param'))
+    jest
+      .spyOn(validatorStub, 'validate')
+      .mockReturnValueOnce(new MissingParamError('any_param'))
 
     const httpRequest = {
       body: {
         name: 'valid_name',
         email: 'valid_email@mail.com',
         password: 'valid_password',
-        passwordConfirmation: 'valid_password'
-      }
+        passwordConfirmation: 'valid_password',
+      },
     }
 
     const httpResponse = await sut.handle(httpRequest)

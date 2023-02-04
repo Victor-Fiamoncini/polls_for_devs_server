@@ -1,13 +1,16 @@
-import { AddAccountRepository, AccountModel, DbAddAccountUseCase, Hasher } from 'src/data'
+import { Hasher } from '@/data/contracts/hash/Hasher'
+import { AddAccountRepository } from '@/data/contracts/repositories/AddAccountRepository'
+import { AccountModel } from '@/data/models/AccountModel'
+import { DbAddAccountUseCase } from '@/data/usecases/DbAddAccountUseCase'
 
 const makeAddAccountRepositoryStub = () => {
   class AddAccountRepositoryStub implements AddAccountRepository.Repository {
-    async add (account: AddAccountRepository.Params): Promise<AccountModel> {
+    async add(account: AddAccountRepository.Params): Promise<AccountModel> {
       const fakeAccount = {
         id: 'valid_id',
         name: 'valid_name',
         email: 'valid_email',
-        password: 'hashed_password'
+        password: 'hashed_password',
       }
 
       return new Promise(resolve => resolve(fakeAccount))
@@ -19,7 +22,7 @@ const makeAddAccountRepositoryStub = () => {
 
 const makeHasherStub = () => {
   class HasherStub implements Hasher {
-    async hash (value: string): Promise<string> {
+    async hash(value: string): Promise<string> {
       return new Promise(resolve => resolve('hashed_password'))
     }
   }
@@ -44,7 +47,7 @@ describe('DbAddAccountUseCase', () => {
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
-      password: 'valid_password'
+      password: 'valid_password',
     }
 
     await sut.add(accountData)
@@ -55,12 +58,16 @@ describe('DbAddAccountUseCase', () => {
   it('should throw if Hasher throws', async () => {
     const { hasherStub, sut } = makeSut()
 
-    jest.spyOn(hasherStub, 'hash').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest
+      .spyOn(hasherStub, 'hash')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
 
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
-      password: 'valid_password'
+      password: 'valid_password',
     }
 
     const promise = sut.add(accountData)
@@ -76,7 +83,7 @@ describe('DbAddAccountUseCase', () => {
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
-      password: 'valid_password'
+      password: 'valid_password',
     }
 
     await sut.add(accountData)
@@ -84,20 +91,23 @@ describe('DbAddAccountUseCase', () => {
     expect(addSpy).toHaveBeenCalledWith({
       name: 'valid_name',
       email: 'valid_email',
-      password: 'hashed_password'
+      password: 'hashed_password',
     })
   })
 
   it('should throw if AddAccountRepository throws', async () => {
     const { addAccountRepositoryStub, sut } = makeSut()
 
-    jest.spyOn(addAccountRepositoryStub, 'add')
-      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest
+      .spyOn(addAccountRepositoryStub, 'add')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      )
 
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
-      password: 'valid_password'
+      password: 'valid_password',
     }
 
     const promise = sut.add(accountData)
@@ -111,7 +121,7 @@ describe('DbAddAccountUseCase', () => {
     const accountData = {
       name: 'valid_name',
       email: 'valid_email',
-      password: 'valid_password'
+      password: 'valid_password',
     }
 
     const account = await sut.add(accountData)
@@ -120,7 +130,7 @@ describe('DbAddAccountUseCase', () => {
       id: 'valid_id',
       name: 'valid_name',
       email: 'valid_email',
-      password: 'hashed_password'
+      password: 'hashed_password',
     })
   })
 })

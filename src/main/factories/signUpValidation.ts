@@ -1,4 +1,8 @@
-import { CompareFieldsValidator, EmailValidator, RequiredFieldValidator, Validator, ValidatorComposite } from 'src/validation'
+import { Validator } from '@/validation/contracts/Validator'
+import { CompareFieldsValidator } from '@/validation/validators/CompareFieldsValidator'
+import { EmailValidator } from '@/validation/validators/EmailValidator'
+import { RequiredFieldValidator } from '@/validation/validators/RequiredFieldValidator'
+import { ValidatorComposite } from '@/validation/validators/ValidatorComposite'
 
 export const makeSignUpValidation = (): Validator => {
   const validatorComposite = new ValidatorComposite([
@@ -7,7 +11,7 @@ export const makeSignUpValidation = (): Validator => {
     new RequiredFieldValidator('password'),
     new RequiredFieldValidator('passwordConfirmation'),
     new CompareFieldsValidator('password', 'passwordConfirmation'),
-    new EmailValidator('email')
+    new EmailValidator('email'),
   ])
 
   return validatorComposite

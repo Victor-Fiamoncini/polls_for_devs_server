@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 
-import { JwtAdapter } from 'src/infra'
+import { JwtAdapter } from '@/infra/encrypt/JwtAdapter'
 
 jest.mock('jsonwebtoken', () => ({
   sign: async () => {
     return 'any_token'
-  }
+  },
 }))
 
 const makeSut = () => new JwtAdapter('any_secret')

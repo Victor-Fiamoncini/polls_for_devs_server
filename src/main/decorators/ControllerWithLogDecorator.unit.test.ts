@@ -1,15 +1,17 @@
-import { LogErrorRepository } from 'src/data'
+import { LogErrorRepository } from '@/data/contracts/repositories/LogErrorRepository'
 
-import { ControllerWithLogDecorator } from 'src/main/decorators'
+import { ControllerWithLogDecorator } from '@/main/decorators/ControllerWithLogDecorator'
 
-import { Controller, HttpRequest, HttpResponse, serverError } from 'src/presentation'
+import { Controller } from '@/presentation/contracts/Controller'
+import { HttpRequest } from '@/presentation/http/HttpRequest'
+import { HttpResponse, serverError } from '@/presentation/http/HttpResponse'
 
 const makeControllerStub = () => {
   class ControlerStub implements Controller {
-    async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+    async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
       const httpResponse: HttpResponse = {
         body: {},
-        statusCode: 200
+        statusCode: 200,
       }
 
       return new Promise(resolve => resolve(httpResponse))
@@ -21,7 +23,7 @@ const makeControllerStub = () => {
 
 const makeLogErrorRepositoryStub = () => {
   class LogErrorRepositoryStub implements LogErrorRepository {
-    async logError (stack: string): Promise<void> {
+    async logError(stack: string): Promise<void> {
       return new Promise(resolve => resolve())
     }
   }
@@ -32,7 +34,10 @@ const makeLogErrorRepositoryStub = () => {
 const makeSut = () => {
   const controllerStub = makeControllerStub()
   const logErrorRepositoryStub = makeLogErrorRepositoryStub()
-  const sut = new ControllerWithLogDecorator(controllerStub, logErrorRepositoryStub)
+  const sut = new ControllerWithLogDecorator(
+    controllerStub,
+    logErrorRepositoryStub
+  )
 
   return { controllerStub, logErrorRepositoryStub, sut }
 }
@@ -48,8 +53,8 @@ describe('ControllerWithLogDecorator', () => {
         name: 'any_name',
         email: 'any_email@mail.com',
         password: 'any_password',
-        passwordConfirmation: 'any_password'
-      }
+        passwordConfirmation: 'any_password',
+      },
     }
 
     await sut.handle(httpRequest)
@@ -65,8 +70,8 @@ describe('ControllerWithLogDecorator', () => {
         name: 'any_name',
         email: 'any_email@mail.com',
         password: 'any_password',
-        passwordConfirmation: 'any_password'
-      }
+        passwordConfirmation: 'any_password',
+      },
     }
 
     const httpResponse = await sut.handle(httpRequest)
@@ -82,15 +87,19 @@ describe('ControllerWithLogDecorator', () => {
 
     const logSpy = jest.spyOn(logErrorRepositoryStub, 'logError')
 
-    jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(new Promise(resolve => resolve(serverError(fakeError))))
+    jest
+      .spyOn(controllerStub, 'handle')
+      .mockReturnValueOnce(
+        new Promise(resolve => resolve(serverError(fakeError)))
+      )
 
     const httpRequest = {
       body: {
         name: 'any_name',
         email: 'any_email@mail.com',
         password: 'any_password',
-        passwordConfirmation: 'any_password'
-      }
+        passwordConfirmation: 'any_password',
+      },
     }
 
     await sut.handle(httpRequest)

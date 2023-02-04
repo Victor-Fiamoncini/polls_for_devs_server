@@ -1,14 +1,14 @@
 import bcrypt from 'bcrypt'
 
-import { BcryptAdapter } from 'src/infra'
+import { BcryptAdapter } from '@/infra/hash/BcryptAdapter'
 
 jest.mock('bcrypt', () => ({
-  async hash (): Promise<string> {
+  async hash(): Promise<string> {
     return 'hashed_value'
   },
-  async compare (): Promise<boolean> {
+  async compare(): Promise<boolean> {
     return true
-  }
+  },
 }))
 
 const salt = 12
@@ -52,7 +52,7 @@ describe('BcryptAdapter', () => {
 
     await sut.compare({
       plainPayload: 'any_plain_payload',
-      hashedPayload: 'any_hashed_payload'
+      hashedPayload: 'any_hashed_payload',
     })
 
     expect(compareSpy).toHaveBeenCalledWith(
@@ -66,7 +66,7 @@ describe('BcryptAdapter', () => {
 
     const isValid = await sut.compare({
       plainPayload: 'any_plain_payload',
-      hashedPayload: 'any_hashed_payload'
+      hashedPayload: 'any_hashed_payload',
     })
 
     expect(isValid).toBe(true)
@@ -79,7 +79,7 @@ describe('BcryptAdapter', () => {
 
     const isValid = await sut.compare({
       plainPayload: 'any_plain_payload',
-      hashedPayload: 'any_hashed_payload'
+      hashedPayload: 'any_hashed_payload',
     })
 
     expect(isValid).toBe(false)
@@ -96,7 +96,7 @@ describe('BcryptAdapter', () => {
 
     const comparePromise = sut.compare({
       plainPayload: 'any_plain_payload',
-      hashedPayload: 'any_hashed_payload'
+      hashedPayload: 'any_hashed_payload',
     })
 
     await expect(comparePromise).rejects.toThrow()

@@ -1,7 +1,7 @@
 import express from 'express'
 
-import { initMiddlewares } from 'src/main/config/middlewares'
-import { initRoutes } from 'src/main/config/routes'
+import { initMiddlewares } from '@/main/config/middlewares'
+import { initRoutes } from '@/main/config/routes'
 
 const app = express()
 

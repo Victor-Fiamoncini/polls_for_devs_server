@@ -1,6 +1,7 @@
 import { Collection } from 'mongodb'
 
-import { MongoDbAccountRepository, MongoHelper } from 'src/infra'
+import { MongoDbAccountRepository } from '@/infra/mongodb/MongoDbAccountRepository'
+import { MongoHelper } from '@/infra/mongodb/MongoHelper'
 
 const makeSut = () => new MongoDbAccountRepository()
 
@@ -27,7 +28,7 @@ describe('MongoDbAccountRepository', () => {
     const account = await sut.add({
       name: 'any_name',
       email: 'any_email@mail.com',
-      password: 'any_password'
+      password: 'any_password',
     })
 
     expect(account).toBeTruthy()
@@ -43,7 +44,7 @@ describe('MongoDbAccountRepository', () => {
     await accountCollection.insertOne({
       name: 'any_name',
       email: 'any_email@mail.com',
-      password: 'any_password'
+      password: 'any_password',
     })
 
     const account = await sut.loadByEmail({ email: 'any_email@mail.com' })
@@ -69,10 +70,13 @@ describe('MongoDbAccountRepository', () => {
     const result = await accountCollection.insertOne({
       name: 'any_name',
       email: 'any_email@mail.com',
-      password: 'any_password'
+      password: 'any_password',
     })
 
-    await sut.updateAccessToken({ id: result.insertedId.toString(), token: 'any_token' })
+    await sut.updateAccessToken({
+      id: result.insertedId.toString(),
+      token: 'any_token',
+    })
 
     const account = await accountCollection.findOne({ _id: result.insertedId })
 

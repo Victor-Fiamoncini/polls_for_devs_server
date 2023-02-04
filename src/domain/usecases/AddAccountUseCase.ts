@@ -1,4 +1,4 @@
-import { AccountEntity } from 'src/domain'
+import { AccountEntity } from '@/domain/entities/AccountEntity'
 
 export namespace AddAccountUseCase {
   export type Params = {

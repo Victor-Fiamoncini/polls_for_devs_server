@@ -1,10 +1,12 @@
-import { InvalidParamError, MissingParamError } from 'src/presentation'
+import { InvalidParamError } from '@/presentation/errors/InvalidParamError'
+import { MissingParamError } from '@/presentation/errors/MissingParamError'
 
-import { ValidatorComposite, Validator } from 'src/validation'
+import { Validator } from '@/validation/contracts/Validator'
+import { ValidatorComposite } from '@/validation/validators/ValidatorComposite'
 
 const makeValidatorStub = () => {
   class ValidatorStub implements Validator {
-    validate (input: any): Error {
+    validate(input: any): Error {
       return null
     }
   }
@@ -18,7 +20,7 @@ const makeSut = () => {
 
   return {
     validatorStubs,
-    sut
+    sut,
   }
 }
 
@@ -26,7 +28,9 @@ describe('ValidatorComposite', () => {
   it('should return an error if any validation fails', () => {
     const { validatorStubs, sut } = makeSut()
 
-    jest.spyOn(validatorStubs[0], 'validate').mockReturnValueOnce(new MissingParamError('any_field'))
+    jest
+      .spyOn(validatorStubs[0], 'validate')
+      .mockReturnValueOnce(new MissingParamError('any_field'))
 
     const error = sut.validate({ any_field: 'any_field_value' })
 
@@ -36,8 +40,12 @@ describe('ValidatorComposite', () => {
   it('should return the first error if more than one validation fails', () => {
     const { validatorStubs, sut } = makeSut()
 
-    jest.spyOn(validatorStubs[0], 'validate').mockReturnValueOnce(new InvalidParamError('any_field'))
-    jest.spyOn(validatorStubs[1], 'validate').mockReturnValueOnce(new MissingParamError('any_field'))
+    jest
+      .spyOn(validatorStubs[0], 'validate')
+      .mockReturnValueOnce(new InvalidParamError('any_field'))
+    jest
+      .spyOn(validatorStubs[1], 'validate')
+      .mockReturnValueOnce(new MissingParamError('any_field'))
 
     const error = sut.validate({ any_field: 'any_field_value' })
 

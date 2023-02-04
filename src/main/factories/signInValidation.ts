@@ -1,10 +1,13 @@
-import { EmailValidator, RequiredFieldValidator, Validator, ValidatorComposite } from 'src/validation'
+import { Validator } from '@/validation/contracts/Validator'
+import { EmailValidator } from '@/validation/validators/EmailValidator'
+import { RequiredFieldValidator } from '@/validation/validators/RequiredFieldValidator'
+import { ValidatorComposite } from '@/validation/validators/ValidatorComposite'
 
 export const makeSignInValidation = (): Validator => {
   const validatorComposite = new ValidatorComposite([
     new RequiredFieldValidator('email'),
     new RequiredFieldValidator('password'),
-    new EmailValidator('email')
+    new EmailValidator('email'),
   ])
 
   return validatorComposite

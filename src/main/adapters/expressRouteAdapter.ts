@@ -1,11 +1,12 @@
 import { Request, Response } from 'express'
 
-import { Controller, HttpRequest } from 'src/presentation'
+import { Controller } from '@/presentation/contracts/Controller'
+import { HttpRequest } from '@/presentation/http/HttpRequest'
 
 export const expressRouteAdapter = (controller: Controller) => {
   return async (req: Request, res: Response) => {
     const httpRequest: HttpRequest = {
-      body: req.body
+      body: req.body,
     }
 
     const httpResponse = await controller.handle(httpRequest)
@@ -14,6 +15,8 @@ export const expressRouteAdapter = (controller: Controller) => {
       return res.status(httpResponse.statusCode).json(httpResponse.body)
     }
 
-    return res.status(httpResponse.statusCode).json({ error: httpResponse.body?.message || httpResponse.body })
+    return res
+      .status(httpResponse.statusCode)
+      .json({ error: httpResponse.body?.message || httpResponse.body })
   }
 }

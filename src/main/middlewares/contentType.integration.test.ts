@@ -1,14 +1,12 @@
 import request from 'supertest'
 
-import { app } from 'src/main/config/app'
+import { app } from '@/main/config/app'
 
 describe('contentType', () => {
   it('should return default response content-type as json', async () => {
     app.get('/test_content_type_json', (req, res) => res.send())
 
-    await request(app)
-      .get('/test_content_type_json')
-      .expect('content-type', /json/)
+    await request(app).get('/test_content_type_json').expect('content-type', /json/)
   })
 
   it('should return content-type as xml when forced', async () => {
@@ -18,8 +16,6 @@ describe('contentType', () => {
       return res.send()
     })
 
-    await request(app)
-      .get('/test_content_type_xml')
-      .expect('content-type', /xml/)
+    await request(app).get('/test_content_type_xml').expect('content-type', /xml/)
   })
 })
