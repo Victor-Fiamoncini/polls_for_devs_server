@@ -4,7 +4,6 @@
     "target": "ES2019",
     "module": "commonjs",
     "esModuleInterop": true,
-    "allowJs": true,
     "baseUrl": ".",
     "paths": {
       "@/data/*": ["./src/data/*"],
@@ -16,5 +15,5 @@
     }
   },
   "include": ["./src"],
-  "exclude": ["./build"]
+  "exclude": ["./build", "./coverage", "./src/**/*.(unit|integration).test.ts", "./.docker", "./.husky"]
 }
