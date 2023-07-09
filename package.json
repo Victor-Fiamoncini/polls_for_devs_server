@@ -6,6 +6,9 @@
   "keywords": [],
   "license": "MIT",
   "main": "src/main/server.ts",
+  "engines": {
+    "node": "14.18.3"
+  },
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify src/main/server.ts",
     "build": "rimraf build && tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
