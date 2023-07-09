@@ -1,12 +1,30 @@
-version: "3"
+version: '3'
 
 services:
-  database:
+  polls_for_devs_node:
+    image: node
+    container_name: polls_for_devs_node
+    ports:
+      - 3333:3333
+    build: .
+    restart: on-failure
+    volumes:
+      - .:/polls_for_devs_node
+    networks:
+      - polls_for_devs
+    depends_on:
+      - polls_for_devs_mongo
+
+  polls_for_devs_mongo:
     image: mongo
-    container_name: polls_for_devs_server_mongo
-    hostname: mongodb
+    container_name: polls_for_devs_mongo
     ports:
       - 27017:27017
+    restart: on-failure
     volumes:
-      - ./.docker/polls_for_devs_server_mongo:/data/db
+      - ./.docker/polls_for_devs_mongo:/data/db
+    networks:
+      - polls_for_devs
 
+networks:
+  polls_for_devs:
