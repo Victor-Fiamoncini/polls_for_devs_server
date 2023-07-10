@@ -14,11 +14,11 @@ export default {
     '@/presentation/(.*)': '<rootDir>/src/presentation/$1',
     '@/validation/(.*)': '<rootDir>/src/validation/$1',
   },
-  preset: '@shelf/jest-mongodb',
   roots: ['<rootDir>/src'],
   testMatch: ['**/*.(spec|test).ts'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   transform: {
     '.+\\.ts$': 'ts-jest',
   },
+  watchPathIgnorePatterns: ['globalConfig'],
 } as Config
