@@ -1,2 +1,6 @@
+.docker
 build
+coverage
+doc
+husky
 node_modules

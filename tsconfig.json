@@ -15,5 +15,5 @@
     }
   },
   "include": ["./src"],
-  "exclude": ["./build", "./coverage", "**/*.unit.test.ts", "**/*.integration.test.ts", "./.docker", "./.husky"]
+  "exclude": ["./.docker", "./.husky", "./build", "./coverage"]
 }
