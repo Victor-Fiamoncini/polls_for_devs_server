@@ -10,10 +10,12 @@
     "node": "14.18.3"
   },
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify src/main/server.ts",
+    "prebuild": "echo 'building polls_for_devs_server project...'",
     "build": "rimraf build && tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
-    "start": "node build/main/server.js",
+    "postbuild": "find build -type f -name '*.test.*' -delete",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify src/main/server.ts",
     "prepare": "husky install",
+    "start": "node build/main/server.js",
     "test": "jest --passWithNoTests --no-cache --noStackTrace --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit.config.ts",
     "test:integration": "npm test -- --watch -c jest-integration.config.ts",
