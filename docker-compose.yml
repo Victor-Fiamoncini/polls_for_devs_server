@@ -9,7 +9,7 @@ services:
     build: .
     restart: on-failure
     volumes:
-      - .:/polls_for_devs_node
+      - .:/home/polls_for_devs_node
     networks:
       - polls_for_devs
     depends_on:
