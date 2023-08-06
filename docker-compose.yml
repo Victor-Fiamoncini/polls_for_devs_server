@@ -10,6 +10,7 @@ services:
     restart: on-failure
     volumes:
       - .:/home/polls_for_devs_node
+      - '/home/polls_for_devs_node/node_modules'
     networks:
       - polls_for_devs
     depends_on:
@@ -28,3 +29,4 @@ services:
 
 networks:
   polls_for_devs:
+    driver: bridge
