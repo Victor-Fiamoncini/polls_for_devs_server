@@ -8,7 +8,7 @@ const initApp = async () => {
     await MongoHelper.connect(env.mongoUrl)
 
     app.listen(env.port, () =>
-      console.log(`Server running at http://localhost:${env.port}`)
+      console.log(`☕ Server running at http://localhost:${env.port}`)
     )
   } catch (err) {
     console.error(err)
