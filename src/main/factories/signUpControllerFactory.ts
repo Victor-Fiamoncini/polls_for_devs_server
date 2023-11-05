@@ -8,7 +8,7 @@ import { MongoDbLogErrorRepository } from '@/infra/mongodb/MongoDbLogErrorReposi
 
 import { env } from '@/main/config/env'
 import { ControllerWithLogDecorator } from '@/main/decorators/ControllerWithLogDecorator'
-import { makeSignUpValidation } from '@/main/factories/signUpValidation'
+import { makeSignUpValidator } from '@/main/factories/signUpValidatorFactory'
 
 import { Controller } from '@/presentation/contracts/Controller'
 import { SignUpController } from '@/presentation/controllers/SignUpController'
@@ -20,7 +20,7 @@ export const makeSignUpController = (): Controller => {
   const logErrorRepository = new MongoDbLogErrorRepository()
 
   const addAccountUseCase = new DbAddAccountUseCase(hasher, accountRepository)
-  const validatorComposite = makeSignUpValidation()
+  const validatorComposite = makeSignUpValidator()
   const authenticationUseCase = new DbAuthenticationUseCase(
     accountRepository,
     hasher,

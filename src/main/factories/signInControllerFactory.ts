@@ -7,7 +7,7 @@ import { MongoDbLogErrorRepository } from '@/infra/mongodb/MongoDbLogErrorReposi
 
 import { env } from '@/main/config/env'
 import { ControllerWithLogDecorator } from '@/main/decorators/ControllerWithLogDecorator'
-import { makeSignInValidation } from '@/main/factories/signInValidation'
+import { makeSignInValidator } from '@/main/factories/signInValidatorFactory'
 
 import { Controller } from '@/presentation/contracts/Controller'
 import { SignInController } from '@/presentation/controllers/SignInController'
@@ -25,7 +25,7 @@ export const makeSignInController = (): Controller => {
     encrypter,
     accountRepository
   )
-  const validatorComposite = makeSignInValidation()
+  const validatorComposite = makeSignInValidator()
 
   const signInController = new SignInController(
     authenticationUseCase,
