@@ -5,9 +5,16 @@ import { AuthenticationUseCase } from '@/domain/usecases/AuthenticationUseCase'
 import { SignUpController } from '@/presentation/controllers/SignUpController'
 import { MissingParamError } from '@/presentation/errors/MissingParamError'
 import { ServerError } from '@/presentation/errors/ServerError'
-import { badRequest, ok, serverError } from '@/presentation/http/HttpResponse'
+import {
+  badRequest,
+  forbidden,
+  ok,
+  serverError,
+} from '@/presentation/http/HttpResponse'
 
 import { Validator } from '@/validation/contracts/Validator'
+
+import { EmailAlreadyUsedError } from '../errors/EmailAlreadyUsedError'
 
 const makeAddAccountUseCaseStub = () => {
   class AddAccountUseCaseStub implements AddAccountUseCase.UseCase {
@@ -195,5 +202,21 @@ describe('SignUpController', () => {
     const httpReponse = await sut.handle(httpRequest)
 
     expect(httpReponse).toEqual(ok({ accessToken: 'any_token' }))
+  })
+
+  it('should return 403 AddAccountUseCase returns null', async () => {
+    const { sut, addAccountUseCaseStub } = makeSut()
+
+    jest.spyOn(addAccountUseCaseStub, 'add').mockReturnValueOnce(null)
+
+    const httpRequest = {
+      body: { email: 'any_email@mail.com', password: 'any_password' },
+    }
+
+    const httpReponse = await sut.handle(httpRequest)
+
+    expect(httpReponse).toEqual(
+      forbidden(new EmailAlreadyUsedError('any_email@mail.com'))
+    )
   })
 })

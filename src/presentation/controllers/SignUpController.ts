@@ -5,12 +5,15 @@ import { Controller } from '@/presentation/contracts/Controller'
 import { HttpRequest } from '@/presentation/http/HttpRequest'
 import {
   badRequest,
+  forbidden,
   HttpResponse,
   ok,
   serverError,
 } from '@/presentation/http/HttpResponse'
 
 import { Validator } from '@/validation/contracts/Validator'
+
+import { EmailAlreadyUsedError } from '../errors/EmailAlreadyUsedError'
 
 export class SignUpController implements Controller {
   constructor(
@@ -29,11 +32,15 @@ export class SignUpController implements Controller {
 
       const { name, email, password } = httpRequest.body
 
-      await this.addAccountUseCase.add({
+      const account = await this.addAccountUseCase.add({
         email,
         name,
         password,
       })
+
+      if (!account) {
+        return forbidden(new EmailAlreadyUsedError(email))
+      }
 
       const accessToken = await this.authenticationUseCase.auth({
         email,
