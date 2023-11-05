@@ -16,18 +16,21 @@ export const makeSignInController = (): Controller => {
   const logErrorRepository = new MongoDbLogErrorRepository()
 
   const accountRepository = new MongoDbAccountRepository()
-  const hashComparator = new BcryptAdapter()
+  const hasher = new BcryptAdapter()
   const encrypter = new JwtAdapter(env.jwtSecret)
 
   const authenticationUseCase = new DbAuthenticationUseCase(
     accountRepository,
-    hashComparator,
+    hasher,
     encrypter,
     accountRepository
   )
   const validatorComposite = makeSignInValidation()
 
-  const signInController = new SignInController(authenticationUseCase, validatorComposite)
+  const signInController = new SignInController(
+    authenticationUseCase,
+    validatorComposite
+  )
 
   return new ControllerWithLogDecorator(signInController, logErrorRepository)
 }
