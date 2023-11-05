@@ -1,10 +1,11 @@
 import { AccountEntity } from '@/domain/entities/AccountEntity'
 import { AddAccountUseCase } from '@/domain/usecases/AddAccountUseCase'
+import { AuthenticationUseCase } from '@/domain/usecases/AuthenticationUseCase'
 
 import { SignUpController } from '@/presentation/controllers/SignUpController'
 import { MissingParamError } from '@/presentation/errors/MissingParamError'
 import { ServerError } from '@/presentation/errors/ServerError'
-import { badRequest } from '@/presentation/http/HttpResponse'
+import { badRequest, ok, serverError } from '@/presentation/http/HttpResponse'
 
 import { Validator } from '@/validation/contracts/Validator'
 
@@ -35,14 +36,30 @@ const makeValidatorStub = () => {
   return new ValidatorStub()
 }
 
+const makeAuthenticationUseCaseStub = () => {
+  class AuthenticationUseCaseStub implements AuthenticationUseCase.UseCase {
+    async auth(credentials: AuthenticationUseCase.Params): Promise<string> {
+      return new Promise(resolve => resolve('any_token'))
+    }
+  }
+
+  return new AuthenticationUseCaseStub()
+}
+
 const makeSut = () => {
   const addAccountUseCaseStub = makeAddAccountUseCaseStub()
   const validatorStub = makeValidatorStub()
-  const sut = new SignUpController(addAccountUseCaseStub, validatorStub)
+  const authenticationUseCaseStub = makeAuthenticationUseCaseStub()
+  const sut = new SignUpController(
+    addAccountUseCaseStub,
+    validatorStub,
+    authenticationUseCaseStub
+  )
 
   return {
     addAccountUseCaseStub,
     validatorStub,
+    authenticationUseCaseStub,
     sut,
   }
 }
@@ -95,29 +112,6 @@ describe('SignUpController', () => {
     expect(httpResponse.body).toEqual(new ServerError())
   })
 
-  it('should return 209 if valid data is provided', async () => {
-    const { sut } = makeSut()
-
-    const httpRequest = {
-      body: {
-        name: 'valid_name',
-        email: 'valid_email@mail.com',
-        password: 'valid_password',
-        passwordConfirmation: 'valid_password',
-      },
-    }
-
-    const httpResponse = await sut.handle(httpRequest)
-
-    expect(httpResponse.statusCode).toBe(201)
-    expect(httpResponse.body).toEqual({
-      id: 'valid_id',
-      name: 'valid_name',
-      email: 'valid_email@mail.com',
-      password: 'valid_password',
-    })
-  })
-
   it('should call Validator with correct values', async () => {
     const { sut, validatorStub } = makeSut()
 
@@ -156,5 +150,50 @@ describe('SignUpController', () => {
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse).toEqual(badRequest(new MissingParamError('any_param')))
+  })
+
+  it('should call AuthenticationUseCase with correct values', async () => {
+    const { authenticationUseCaseStub, sut } = makeSut()
+
+    const authSpy = jest.spyOn(authenticationUseCaseStub, 'auth')
+
+    const httpRequest = {
+      body: { email: 'any_email@mail.com', password: 'any_password' },
+    }
+
+    await sut.handle(httpRequest)
+
+    expect(authSpy).toHaveBeenCalledWith({
+      email: 'any_email@mail.com',
+      password: 'any_password',
+    })
+  })
+
+  it('should return 500 if AuthenticationUseCase throws', async () => {
+    const { authenticationUseCaseStub, sut } = makeSut()
+
+    jest.spyOn(authenticationUseCaseStub, 'auth').mockImplementationOnce(() => {
+      return new Promise((resolve, reject) => reject(new Error()))
+    })
+
+    const httpRequest = {
+      body: { email: 'any_email@mail.com', password: 'any_password' },
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  it('should return 200 if valid credentials are provided', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest = {
+      body: { email: 'any_email@mail.com', password: 'any_password' },
+    }
+
+    const httpReponse = await sut.handle(httpRequest)
+
+    expect(httpReponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 })

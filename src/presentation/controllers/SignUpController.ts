@@ -1,11 +1,12 @@
 import { AddAccountUseCase } from '@/domain/usecases/AddAccountUseCase'
+import { AuthenticationUseCase } from '@/domain/usecases/AuthenticationUseCase'
 
 import { Controller } from '@/presentation/contracts/Controller'
 import { HttpRequest } from '@/presentation/http/HttpRequest'
 import {
   badRequest,
-  created,
   HttpResponse,
+  ok,
   serverError,
 } from '@/presentation/http/HttpResponse'
 
@@ -14,7 +15,8 @@ import { Validator } from '@/validation/contracts/Validator'
 export class SignUpController implements Controller {
   constructor(
     private readonly addAccountUseCase: AddAccountUseCase.UseCase,
-    private readonly validator: Validator
+    private readonly validator: Validator,
+    private readonly authenticationUseCase: AuthenticationUseCase.UseCase
   ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -27,13 +29,18 @@ export class SignUpController implements Controller {
 
       const { name, email, password } = httpRequest.body
 
-      const account = await this.addAccountUseCase.add({
+      await this.addAccountUseCase.add({
         email,
         name,
         password,
       })
 
-      return created(account)
+      const accessToken = await this.authenticationUseCase.auth({
+        email,
+        password,
+      })
+
+      return ok({ accessToken })
     } catch (err) {
       return serverError(err)
     }
