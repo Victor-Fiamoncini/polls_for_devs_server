@@ -1,30 +1,12 @@
-import { DbAuthenticationUseCase } from '@/data/usecases/DbAuthenticationUseCase'
-
-import { JwtAdapter } from '@/infra/encrypt/JwtAdapter'
-import { BcryptAdapter } from '@/infra/hash/BcryptAdapter'
-import { MongoDbAccountRepository } from '@/infra/mongodb/MongoDbAccountRepository'
-import { MongoDbLogErrorRepository } from '@/infra/mongodb/MongoDbLogErrorRepository'
-
-import { env } from '@/main/config/env'
-import { ControllerWithLogDecorator } from '@/main/decorators/ControllerWithLogDecorator'
+import { makeAuthenticationUseCase } from '@/main/factories/authenticationUseCaseFactory'
+import { makeLogControllerDecorator } from '@/main/factories/logControllerDecoratorFactory'
 import { makeSignInValidator } from '@/main/factories/signInValidatorFactory'
 
 import { Controller } from '@/presentation/contracts/Controller'
 import { SignInController } from '@/presentation/controllers/SignInController'
 
 export const makeSignInController = (): Controller => {
-  const logErrorRepository = new MongoDbLogErrorRepository()
-
-  const accountRepository = new MongoDbAccountRepository()
-  const hasher = new BcryptAdapter()
-  const encrypter = new JwtAdapter(env.jwtSecret)
-
-  const authenticationUseCase = new DbAuthenticationUseCase(
-    accountRepository,
-    hasher,
-    encrypter,
-    accountRepository
-  )
+  const authenticationUseCase = makeAuthenticationUseCase()
   const validatorComposite = makeSignInValidator()
 
   const signInController = new SignInController(
@@ -32,5 +14,5 @@ export const makeSignInController = (): Controller => {
     validatorComposite
   )
 
-  return new ControllerWithLogDecorator(signInController, logErrorRepository)
+  return makeLogControllerDecorator(signInController)
 }
