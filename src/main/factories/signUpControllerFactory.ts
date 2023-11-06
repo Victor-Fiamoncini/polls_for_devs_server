@@ -14,7 +14,11 @@ export const makeSignUpController = (): Controller => {
   const hasher = new BcryptAdapter()
   const accountRepository = new MongoDbAccountRepository()
 
-  const addAccountUseCase = new DbAddAccountUseCase(hasher, accountRepository)
+  const addAccountUseCase = new DbAddAccountUseCase(
+    hasher,
+    accountRepository,
+    accountRepository
+  )
   const validatorComposite = makeSignUpValidator()
   const authenticationUseCase = makeAuthenticationUseCase()
 
