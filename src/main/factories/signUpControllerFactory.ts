@@ -8,7 +8,7 @@ import { makeLogControllerDecorator } from '@/main/factories/logControllerDecora
 import { makeSignUpValidator } from '@/main/factories/signUpValidatorFactory'
 
 import { Controller } from '@/presentation/contracts/Controller'
-import { SignUpController } from '@/presentation/controllers/SignUpController'
+import { SignUpController } from '@/presentation/controllers/auth/SignUpController'
 
 export const makeSignUpController = (): Controller => {
   const hasher = new BcryptAdapter()

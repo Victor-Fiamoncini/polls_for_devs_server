@@ -3,7 +3,7 @@ import { makeLogControllerDecorator } from '@/main/factories/logControllerDecora
 import { makeSignInValidator } from '@/main/factories/signInValidatorFactory'
 
 import { Controller } from '@/presentation/contracts/Controller'
-import { SignInController } from '@/presentation/controllers/SignInController'
+import { SignInController } from '@/presentation/controllers/auth/SignInController'
 
 export const makeSignInController = (): Controller => {
   const authenticationUseCase = makeAuthenticationUseCase()

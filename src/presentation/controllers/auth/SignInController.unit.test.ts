@@ -1,6 +1,6 @@
 import { AuthenticationUseCase } from '@/domain/usecases/AuthenticationUseCase'
 
-import { SignInController } from '@/presentation/controllers/SignInController'
+import { SignInController } from '@/presentation/controllers/auth/SignInController'
 import { MissingParamError } from '@/presentation/errors/MissingParamError'
 import {
   badRequest,

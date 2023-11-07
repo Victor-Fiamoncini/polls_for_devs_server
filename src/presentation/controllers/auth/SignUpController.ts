@@ -13,7 +13,7 @@ import {
 
 import { Validator } from '@/validation/contracts/Validator'
 
-import { EmailAlreadyUsedError } from '../errors/EmailAlreadyUsedError'
+import { EmailAlreadyUsedError } from '../../errors/EmailAlreadyUsedError'
 
 export class SignUpController implements Controller {
   constructor(

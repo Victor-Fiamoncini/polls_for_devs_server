@@ -2,7 +2,7 @@ import { AccountEntity } from '@/domain/entities/AccountEntity'
 import { AddAccountUseCase } from '@/domain/usecases/AddAccountUseCase'
 import { AuthenticationUseCase } from '@/domain/usecases/AuthenticationUseCase'
 
-import { SignUpController } from '@/presentation/controllers/SignUpController'
+import { SignUpController } from '@/presentation/controllers/auth/SignUpController'
 import { MissingParamError } from '@/presentation/errors/MissingParamError'
 import { ServerError } from '@/presentation/errors/ServerError'
 import {
@@ -14,7 +14,7 @@ import {
 
 import { Validator } from '@/validation/contracts/Validator'
 
-import { EmailAlreadyUsedError } from '../errors/EmailAlreadyUsedError'
+import { EmailAlreadyUsedError } from '../../errors/EmailAlreadyUsedError'
 
 const makeAddAccountUseCaseStub = () => {
   class AddAccountUseCaseStub implements AddAccountUseCase.UseCase {
