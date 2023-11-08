@@ -5,6 +5,7 @@ import { HttpRequest } from '@/presentation/http/HttpRequest'
 import {
   HttpResponse,
   badRequest,
+  noContent,
   serverError,
 } from '@/presentation/http/HttpResponse'
 
@@ -25,6 +26,8 @@ export class AddSurveyController implements Controller {
       const { question, answers } = httpRequest.body
 
       await this.addSurveyUseCase.add({ question, answers })
+
+      return noContent()
     } catch (err) {
       return serverError(err)
     }

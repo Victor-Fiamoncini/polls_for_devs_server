@@ -1,7 +1,11 @@
 import { AddSurveyUseCase } from '@/domain/usecases/AddSurveyUseCase'
 
 import { AddSurveyController } from '@/presentation/controllers/survey/AddSurveyController'
-import { badRequest, serverError } from '@/presentation/http/HttpResponse'
+import {
+  badRequest,
+  noContent,
+  serverError,
+} from '@/presentation/http/HttpResponse'
 
 import { Validator } from '@/validation/contracts/Validator'
 
@@ -106,5 +110,20 @@ describe('AddSurveyController', () => {
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  it('should return 204 on success', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest = {
+      body: {
+        question: 'any_question',
+        answers: [{ image: 'any_image', answer: 'any_answer' }],
+      },
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse).toEqual(noContent())
   })
 })
