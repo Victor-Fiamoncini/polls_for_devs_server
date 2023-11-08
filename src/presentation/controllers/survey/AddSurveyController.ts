@@ -2,7 +2,11 @@ import { AddSurveyUseCase } from '@/domain/usecases/AddSurveyUseCase'
 
 import { Controller } from '@/presentation/contracts/Controller'
 import { HttpRequest } from '@/presentation/http/HttpRequest'
-import { HttpResponse, badRequest, ok } from '@/presentation/http/HttpResponse'
+import {
+  HttpResponse,
+  badRequest,
+  serverError,
+} from '@/presentation/http/HttpResponse'
 
 import { Validator } from '@/validation/contracts/Validator'
 
@@ -13,14 +17,16 @@ export class AddSurveyController implements Controller {
   ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    const error = this.validator.validate(httpRequest.body)
+    try {
+      const error = this.validator.validate(httpRequest.body)
 
-    if (error) {
-      return badRequest(error)
+      if (error) return badRequest(error)
+
+      const { question, answers } = httpRequest.body
+
+      await this.addSurveyUseCase.add({ question, answers })
+    } catch (err) {
+      return serverError(err)
     }
-
-    const { question, answers } = httpRequest.body
-
-    await this.addSurveyUseCase.add({ question, answers })
   }
 }
