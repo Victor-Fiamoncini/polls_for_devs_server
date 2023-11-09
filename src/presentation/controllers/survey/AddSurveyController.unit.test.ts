@@ -1,3 +1,4 @@
+import { SurveyEntity } from '@/domain/entities/SurveyEntity'
 import { AddSurveyUseCase } from '@/domain/usecases/AddSurveyUseCase'
 
 import { AddSurveyController } from '@/presentation/controllers/survey/AddSurveyController'
@@ -21,7 +22,7 @@ const makeValidatorStub = () => {
 
 const makeAddSurveyUseCaseStub = () => {
   class AddSurveyUseCaseStub implements AddSurveyUseCase.UseCase {
-    async add(survey: AddSurveyUseCase.Params): Promise<void> {}
+    async add(survey: SurveyEntity): Promise<void> {}
   }
 
   return new AddSurveyUseCaseStub()
