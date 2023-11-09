@@ -3,7 +3,7 @@ type SurveyAnswer = {
   answer: string
 }
 
-export interface SurveyEntity {
+export type SurveyEntity = {
   question: string
   answers: SurveyAnswer[]
 }

@@ -1,4 +1,4 @@
-export interface AccountEntity {
+export type AccountEntity = {
   id: string
   name: string
   email: string
