@@ -1,13 +1,9 @@
 import { AccountEntity } from '@/domain/entities/AccountEntity'
 
 export namespace AddAccountUseCase {
-  export type Params = {
-    name: string
-    email: string
-    password: string
-  }
+  export type Params = Omit<AccountEntity, 'id'>
 
   export interface UseCase {
-    add(account: AddAccountUseCase.Params): Promise<AccountEntity>
+    add(account: Params): Promise<AccountEntity>
   }
 }

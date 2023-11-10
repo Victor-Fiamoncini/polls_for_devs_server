@@ -1,13 +1,9 @@
 import { AccountModel } from '@/data/models/AccountModel'
 
 export namespace AddAccountRepository {
-  export type Params = {
-    name: string
-    email: string
-    password: string
-  }
+  export type Params = Omit<AccountModel, 'id'>
 
   export interface Repository {
-    add(account: AddAccountRepository.Params): Promise<AccountModel>
+    add(account: Params): Promise<AccountModel>
   }
 }

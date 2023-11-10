@@ -1,6 +1,6 @@
 export namespace HashComparator {
   export interface Comparator {
-    compare(params: HashComparator.Params): Promise<boolean>
+    compare(params: Params): Promise<boolean>
   }
 
   export type Params = {
