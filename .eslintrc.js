@@ -26,8 +26,9 @@ module.exports = {
   plugins: ['@typescript-eslint', 'eslint-plugin-import-helpers'],
   rules: {
     'no-useless-constructor': 'off',
-    '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-namespace': 'off',
     'import-helpers/order-imports': [
       'warn',
       {
