@@ -23,6 +23,14 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
+  overrides: [
+    {
+      files: ['*.unit.test.ts'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'off',
+      },
+    },
+  ],
   plugins: ['@typescript-eslint', 'eslint-plugin-import-helpers'],
   rules: {
     'no-useless-constructor': 'off',
