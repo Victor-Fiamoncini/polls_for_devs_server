@@ -1,7 +1,6 @@
+import { AddSurveyRepository } from '@/data/contracts/repositories/AddSurveyRepository'
 import { SurveyModel } from '@/data/models/SurveyModel'
-import { DbAddSurveyUseCase } from '@/data/usecases/DbAddSurveyUseCase'
-
-import { AddSurveyRepository } from '../contracts/repositories/AddSurveyRepository'
+import { DbAddSurveyUseCase } from '@/data/usecases/survey/DbAddSurveyUseCase'
 
 const makeAddSurveyRepositoryStub = () => {
   class AddSurveyRepositoryStub implements AddSurveyRepository.Repository {

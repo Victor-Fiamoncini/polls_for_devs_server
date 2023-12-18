@@ -3,7 +3,7 @@ import { HashComparator } from '@/data/contracts/hash/HashComparator'
 import { LoadAccountByEmailRepository } from '@/data/contracts/repositories/LoadAccountByEmailRepository'
 import { UpdateAccessTokenRepository } from '@/data/contracts/repositories/UpdateAccessTokenRepository'
 import { AccountModel } from '@/data/models/AccountModel'
-import { DbAuthenticationUseCase } from '@/data/usecases/DbAuthenticationUseCase'
+import { DbAuthenticationUseCase } from '@/data/usecases/auth/DbAuthenticationUseCase'
 
 const makeLoadAccountByEmailRepositoryStub = () => {
   class LoadAccountByEmailRepositoryStub

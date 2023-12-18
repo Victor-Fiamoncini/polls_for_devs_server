@@ -1,4 +1,4 @@
-import { DbAuthenticationUseCase } from '@/data/usecases/DbAuthenticationUseCase'
+import { DbAuthenticationUseCase } from '@/data/usecases/auth/DbAuthenticationUseCase'
 
 import { AuthenticationUseCase } from '@/domain/usecases/AuthenticationUseCase'
 

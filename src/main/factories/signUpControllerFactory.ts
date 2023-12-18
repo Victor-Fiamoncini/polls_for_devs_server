@@ -1,4 +1,4 @@
-import { DbAddAccountUseCase } from '@/data/usecases/DbAddAccountUseCase'
+import { DbAddAccountUseCase } from '@/data/usecases/auth/DbAddAccountUseCase'
 
 import { BcryptAdapter } from '@/infra/hash/BcryptAdapter'
 import { MongoDbAccountRepository } from '@/infra/mongodb/MongoDbAccountRepository'

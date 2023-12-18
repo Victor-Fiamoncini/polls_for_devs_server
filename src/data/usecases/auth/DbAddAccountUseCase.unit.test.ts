@@ -2,7 +2,7 @@ import { Hasher } from '@/data/contracts/hash/Hasher'
 import { AddAccountRepository } from '@/data/contracts/repositories/AddAccountRepository'
 import { LoadAccountByEmailRepository } from '@/data/contracts/repositories/LoadAccountByEmailRepository'
 import { AccountModel } from '@/data/models/AccountModel'
-import { DbAddAccountUseCase } from '@/data/usecases/DbAddAccountUseCase'
+import { DbAddAccountUseCase } from '@/data/usecases/auth/DbAddAccountUseCase'
 
 const makeAddAccountRepositoryStub = () => {
   class AddAccountRepositoryStub implements AddAccountRepository.Repository {
