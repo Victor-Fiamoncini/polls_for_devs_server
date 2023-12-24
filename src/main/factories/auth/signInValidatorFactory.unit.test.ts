@@ -1,4 +1,4 @@
-import { makeSignInValidator as sut } from '@/main/factories/signInValidatorFactory'
+import { makeSignInValidator as sut } from '@/main/factories/auth/signInValidatorFactory'
 
 import { EmailValidator } from '@/validation/validators/EmailValidator'
 import { RequiredFieldValidator } from '@/validation/validators/RequiredFieldValidator'

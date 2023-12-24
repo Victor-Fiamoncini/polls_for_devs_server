@@ -1,6 +1,6 @@
-import { makeAuthenticationUseCase } from '@/main/factories/authenticationUseCaseFactory'
-import { makeLogControllerDecorator } from '@/main/factories/logControllerDecoratorFactory'
-import { makeSignInValidator } from '@/main/factories/signInValidatorFactory'
+import { makeAuthenticationUseCase } from '@/main/factories/auth/authenticationUseCaseFactory'
+import { makeSignInValidator } from '@/main/factories/auth/signInValidatorFactory'
+import { makeLogControllerDecorator } from '@/main/factories/log/logControllerDecoratorFactory'
 
 import { Controller } from '@/presentation/contracts/Controller'
 import { SignInController } from '@/presentation/controllers/auth/SignInController'

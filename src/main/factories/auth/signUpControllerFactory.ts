@@ -3,9 +3,9 @@ import { DbAddAccountUseCase } from '@/data/usecases/auth/DbAddAccountUseCase'
 import { BcryptAdapter } from '@/infra/hash/BcryptAdapter'
 import { MongoDbAccountRepository } from '@/infra/mongodb/MongoDbAccountRepository'
 
-import { makeAuthenticationUseCase } from '@/main/factories/authenticationUseCaseFactory'
-import { makeLogControllerDecorator } from '@/main/factories/logControllerDecoratorFactory'
-import { makeSignUpValidator } from '@/main/factories/signUpValidatorFactory'
+import { makeAuthenticationUseCase } from '@/main/factories/auth/authenticationUseCaseFactory'
+import { makeSignUpValidator } from '@/main/factories/auth/signUpValidatorFactory'
+import { makeLogControllerDecorator } from '@/main/factories/log/logControllerDecoratorFactory'
 
 import { Controller } from '@/presentation/contracts/Controller'
 import { SignUpController } from '@/presentation/controllers/auth/SignUpController'

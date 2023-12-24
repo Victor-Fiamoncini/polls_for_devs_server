@@ -1,4 +1,4 @@
-import { makeSignUpValidator as sut } from '@/main/factories/signUpValidatorFactory'
+import { makeSignUpValidator as sut } from '@/main/factories/auth/signUpValidatorFactory'
 
 import { CompareFieldsValidator } from '@/validation/validators/CompareFieldsValidator'
 import { EmailValidator } from '@/validation/validators/EmailValidator'
